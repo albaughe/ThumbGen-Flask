@@ -131,11 +131,11 @@ class ThumbnailGenerator:
     
     def _add_pattern(self, img, width, height):
         """Add pattern overlay"""
-        if not self.current_pattern:
+        if not self.current_pattern or not hasattr(self.current_pattern, 'size'):
             return img
         
         # Get original pattern dimensions
-        orig_width, orig_height = self.current_pattern.size
+        orig_width, orig_height = self.current_pattern.size  # type: ignore
         
         # Calculate scale factor based on pattern scale setting
         scale_factor = self.pattern_scale / 100.0
