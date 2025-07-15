@@ -826,7 +826,68 @@
                             
 
                             
-
+                            
+                            <!-- Background Image Toggle -->
+                            <div class="mb-2 d-flex align-items-center gap-2">
+                                <input type="checkbox" name="background_image_enabled" id="background_image_enabled">
+                                <label for="background_image_enabled" class="mb-0 small">Enable Background Image</label>
+                            </div>
+                            
+                            <!-- Background Image Controls (initially hidden) -->
+                            <div id="background_image_controls" style="display: none;">
+                                <div class="mb-2">
+                                    <label class="form-label">Background Image:</label>
+                                    <select name="background_image" class="form-select form-select-sm">
+                                        {% for bg in backgrounds %}
+                                        <option value="{{ bg }}">{{ bg }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="mb-2">
+                                    <label class="form-label mb-0">Opacity:</label>
+                                    <div class="slider-group" data-default="100">
+                                        <input type="range" name="background_opacity" min="0" max="100" 
+                                               value="100" class="form-range w-60px">
+                                        <input type="number" min="0" max="100" value="100" 
+                                               class="form-control form-control-sm w-60px">
+                                        <button type="button" class="reset-btn btn btn-secondary btn-sm px-2 py-0">↺</button>
+                                    </div>
+                                </div>
+                                <div class="mb-2">
+                                    <div class="row g-2">
+                                        <div class="col-4">
+                                            <label class="form-label mb-0">Scale:</label>
+                                            <div class="slider-group" data-default="100">
+                                                <input type="range" name="bg_image_scale" min="10" max="200" 
+                                                       value="100" class="form-range w-100">
+                                                <input type="number" min="10" max="500" value="100" 
+                                                       class="form-control form-control-sm w-100">
+                                                <button type="button" class="reset-btn btn btn-secondary btn-sm px-2 py-0">↺</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <label class="form-label mb-0">X Offset:</label>
+                                            <div class="slider-group" data-default="0">
+                                                <input type="range" name="bg_image_x_offset" min="-200" max="200" 
+                                                       value="0" class="form-range w-100">
+                                                <input type="number" min="-500" max="500" value="0" 
+                                                       class="form-control form-control-sm w-100">
+                                                <button type="button" class="reset-btn btn btn-secondary btn-sm px-2 py-0">↺</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <label class="form-label mb-0">Y Offset:</label>
+                                            <div class="slider-group" data-default="0">
+                                                <input type="range" name="bg_image_y_offset" min="-200" max="200" 
+                                                       value="0" class="form-range w-100">
+                                                <input type="number" min="-500" max="500" value="0" 
+                                                       class="form-control form-control-sm w-100">
+                                                <button type="button" class="reset-btn btn btn-secondary btn-sm px-2 py-0">↺</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             
                             <!-- Pattern Toggle -->
                             <div class="mb-2 d-flex align-items-center gap-2">
@@ -1071,6 +1132,27 @@
 
 
         function setupToggleControls() {
+            // Background Image Toggle (with auto-selection)
+            const bgImageCheckbox = document.getElementById('background_image_enabled');
+            const bgImageControls = document.getElementById('background_image_controls');
+            const bgImageSelect = document.querySelector('[name="background_image"]');
+            
+            if (bgImageCheckbox && bgImageControls) {
+                bgImageCheckbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        bgImageControls.style.display = 'block';
+                        // Auto-select first background if available
+                        if (bgImageSelect && bgImageSelect.options.length > 0) {
+                            bgImageSelect.selectedIndex = 0;
+                            bgImageSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                        }
+                    } else {
+                        bgImageControls.style.display = 'none';
+                    }
+                    scheduleUpdate(50);
+                });
+            }
+            
             // Pattern Toggle (with auto-selection)
             const patternCheckbox = document.getElementById('pattern_enabled');
             const patternControls = document.getElementById('pattern_controls');

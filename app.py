@@ -164,8 +164,19 @@ def apply_settings(settings):
     generator.bg_image_x_offset = settings['bg_image_x_offset']
     generator.bg_image_y_offset = settings['bg_image_y_offset']
     
-    # Background image (disabled - removed from UI)
-    generator.background_image = None
+    # Background image
+    if settings['background_image_enabled']:
+        bg_img = settings['background_image']
+        if bg_img and bg_img not in ['None', 'Custom', '']:
+            generator.background_image = resource_manager.get_background_image(bg_img)  # type: ignore
+        else:
+            available_backgrounds = resource_manager.get_background_names()
+            if available_backgrounds:
+                generator.background_image = resource_manager.get_background_image(available_backgrounds[0])  # type: ignore
+            else:
+                generator.background_image = None
+    else:
+        generator.background_image = None
     
     # Pattern
     if settings['pattern_enabled']:
