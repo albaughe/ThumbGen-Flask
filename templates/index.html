@@ -282,12 +282,26 @@
             border-radius: 0;
             background: #40444b;
             cursor: pointer;
-            position: relative;
+            position: absolute;
+            left: 200px;
+            top: 0;
+            opacity: 0;
         }
+        
+
         
         .custom-color-picker-container .color-input-wrapper {
             position: relative;
             width: 100%;
+        }
+        
+        .custom-color-picker-container .dummy-color-input {
+            width: 100%;
+            height: 40px;
+            border: 1.5px solid #444;
+            border-radius: 0;
+            background: #ffffff;
+            cursor: pointer;
         }
         
         .custom-color-picker-container .click-here-label {
@@ -812,68 +826,7 @@
                             
 
                             
-                            <!-- Background Image Toggle -->
-                            <div class="mb-2 d-flex align-items-center gap-2">
-                                <input type="checkbox" name="background_image_enabled" id="background_image_enabled">
-                                <label for="background_image_enabled" class="mb-0 small">Enable Background Image</label>
-                            </div>
-                            
-                            <!-- Background Image Controls (initially hidden) -->
-                            <div id="background_image_controls" style="display: none;">
-                                <div class="mb-2">
-                                    <label class="form-label">Background Image:</label>
-                                    <select name="background_image" class="form-select form-select-sm">
-                                        {% for bg in backgrounds %}
-                                        <option value="{{ bg }}">{{ bg }}</option>
-                                        {% endfor %}
-                                        <option value="Custom">Upload Custom...</option>
-                                    </select>
-                                </div>
-                                <div class="mb-2">
-                                    <label class="form-label mb-0">Opacity:</label>
-                                    <div class="slider-group" data-default="100">
-                                        <input type="range" name="background_opacity" min="0" max="100" 
-                                               value="100" class="form-range w-60px">
-                                        <input type="number" min="0" max="100" value="100" 
-                                               class="form-control form-control-sm w-60px">
-                                        <button type="button" class="reset-btn btn btn-secondary btn-sm px-2 py-0">↺</button>
-                                    </div>
-                                </div>
-                                <div class="mb-2">
-                                    <div class="row g-2">
-                                        <div class="col-4">
-                                            <label class="form-label mb-0">Scale:</label>
-                                            <div class="slider-group" data-default="100">
-                                                <input type="range" name="bg_image_scale" min="10" max="200" 
-                                                       value="100" class="form-range w-100">
-                                                <input type="number" min="10" max="500" value="100" 
-                                                       class="form-control form-control-sm w-100">
-                                                <button type="button" class="reset-btn btn btn-secondary btn-sm px-2 py-0">↺</button>
-                                            </div>
-                                        </div>
-                                        <div class="col-4">
-                                            <label class="form-label mb-0">X Offset:</label>
-                                            <div class="slider-group" data-default="0">
-                                                <input type="range" name="bg_image_x_offset" min="-200" max="200" 
-                                                       value="0" class="form-range w-100">
-                                                <input type="number" min="-500" max="500" value="0" 
-                                                       class="form-control form-control-sm w-100">
-                                                <button type="button" class="reset-btn btn btn-secondary btn-sm px-2 py-0">↺</button>
-                                            </div>
-                                        </div>
-                                        <div class="col-4">
-                                            <label class="form-label mb-0">Y Offset:</label>
-                                            <div class="slider-group" data-default="0">
-                                                <input type="range" name="bg_image_y_offset" min="-200" max="200" 
-                                                       value="0" class="form-range w-100">
-                                                <input type="number" min="-500" max="500" value="0" 
-                                                       class="form-control form-control-sm w-100">
-                                                <button type="button" class="reset-btn btn btn-secondary btn-sm px-2 py-0">↺</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+
                             
                             <!-- Pattern Toggle -->
                             <div class="mb-2 d-flex align-items-center gap-2">
@@ -1118,27 +1071,6 @@
 
 
         function setupToggleControls() {
-            // Background Image Toggle (with auto-selection)
-            const bgImageCheckbox = document.getElementById('background_image_enabled');
-            const bgImageControls = document.getElementById('background_image_controls');
-            const bgImageSelect = document.querySelector('[name="background_image"]');
-            
-            if (bgImageCheckbox && bgImageControls) {
-                bgImageCheckbox.addEventListener('change', function() {
-                    if (this.checked) {
-                        bgImageControls.style.display = 'block';
-                        // Auto-select first background if available
-                        if (bgImageSelect && bgImageSelect.options.length > 0) {
-                            bgImageSelect.selectedIndex = 0;
-                            bgImageSelect.dispatchEvent(new Event('change', { bubbles: true }));
-                        }
-                    } else {
-                        bgImageControls.style.display = 'none';
-                    }
-                    scheduleUpdate(50);
-                });
-            }
-            
             // Pattern Toggle (with auto-selection)
             const patternCheckbox = document.getElementById('pattern_enabled');
             const patternControls = document.getElementById('pattern_controls');
@@ -1337,12 +1269,25 @@
                     updateLabelColor(customInput, clickHereLabel);
                     // Always show hex code in the label
                     clickHereLabel.textContent = customInput.value.toUpperCase();
+                    // Update the dummy box background color
+                    const dummyColorInput = customContainer.querySelector('.dummy-color-input');
+                    dummyColorInput.style.background = customInput.value;
                 });
                 
                 // When opening the custom color picker, set label to hex
                 customInput.addEventListener('focus', function() {
                     clickHereLabel.textContent = customInput.value.toUpperCase();
                 });
+                
+                // Make the dummy color input clickable to trigger the real color input
+                const dummyColorInput = customContainer.querySelector('.dummy-color-input');
+                dummyColorInput.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    customInput.click();
+                });
+                
+
                 
                 // Confirm button
                 confirmBtn.addEventListener('click', function() {
@@ -1817,6 +1762,12 @@
                 if (batchCount) formData.set('batch_count', batchCount.value);
                 if (batchModeCheckbox) formData.set('batch_mode', batchModeCheckbox.checked ? 'on' : 'off');
                 
+                // Debug: log what's being sent
+                console.log('Batch mode:', batchModeCheckbox?.checked);
+                console.log('Start number:', startNumber?.value);
+                console.log('Batch count:', batchCount?.value);
+                console.log('Filename base:', filenameBase?.value);
+                
                 const endpoint = batchMode && batchMode.checked ? '/generate' : '/individual';
                 const response = await fetch(endpoint, {
                     method: 'POST',
@@ -1894,6 +1845,7 @@
             // Batch controls
             const startNumber = document.getElementById('start_number');
             const batchCount = document.getElementById('batch_count');
+            const filenameBase = document.getElementById('filename_base');
             
             if (startNumber) {
                 startNumber.addEventListener('input', () => {
@@ -1903,6 +1855,20 @@
             
             if (batchCount) {
                 batchCount.addEventListener('input', () => {
+                    updateFilenames();
+                });
+            }
+            
+            if (filenameBase) {
+                filenameBase.addEventListener('input', () => {
+                    updateFilenames();
+                });
+            }
+            
+            // Also update filenames when text changes (for ^ replacement)
+            const textInput = document.getElementById('text');
+            if (textInput) {
+                textInput.addEventListener('input', () => {
                     updateFilenames();
                 });
             }
@@ -1997,6 +1963,7 @@
     <!-- Custom Color Picker Container -->
     <div class="custom-color-picker-container" id="custom-color-picker-container">
         <div class="color-input-wrapper">
+            <div class="dummy-color-input"></div>
             <input type="color" id="custom-color-input" value="#ffffff">
             <div class="click-here-label">Click here</div>
         </div>

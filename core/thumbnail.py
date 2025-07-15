@@ -131,7 +131,7 @@ class ThumbnailGenerator:
     
     def _add_pattern(self, img, width, height):
         """Add pattern overlay"""
-        if not self.current_pattern or not hasattr(self.current_pattern, 'size'):
+        if not self.current_pattern:
             return img
         
         # Get original pattern dimensions

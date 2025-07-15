@@ -164,25 +164,14 @@ def apply_settings(settings):
     generator.bg_image_x_offset = settings['bg_image_x_offset']
     generator.bg_image_y_offset = settings['bg_image_y_offset']
     
-    # Background image
-    if settings['background_image_enabled']:
-        bg_img = settings['background_image']
-        if bg_img and bg_img not in ['None', 'Custom', '']:
-            generator.background_image = resource_manager.get_background_image(bg_img)
-        else:
-            available_backgrounds = resource_manager.get_background_names()
-            if available_backgrounds:
-                generator.background_image = resource_manager.get_background_image(available_backgrounds[0])
-            else:
-                generator.background_image = None
-    else:
-        generator.background_image = None
+    # Background image (disabled - removed from UI)
+    generator.background_image = None
     
     # Pattern
     if settings['pattern_enabled']:
         pattern = settings['pattern_overlay']
         if pattern:
-            generator.current_pattern = resource_manager.get_pattern_image(pattern)
+            generator.current_pattern = resource_manager.get_pattern_image(pattern)  # type: ignore
         else:
             generator.current_pattern = None
     else:
@@ -268,6 +257,13 @@ def generate_batch():
     try:
         form_data = request.form.to_dict()
         
+        # Debug: log what we received
+        print("Received form data:", form_data)
+        print("Batch mode:", form_data.get('batch_mode'))
+        print("Start number:", form_data.get('start_number'))
+        print("Batch count:", form_data.get('batch_count'))
+        print("Filename base:", form_data.get('filename_base'))
+        
         # Parse settings
         settings = parse_settings(form_data)
         
@@ -292,7 +288,7 @@ def generate_batch():
                 
                 # Create filename
                 current_filename = filename_base.replace('^', str(start_number + i))
-                filename = f'{current_filename}.png'
+                filename = f'{current_filename}_{start_number + i}.png'
                 
                 # Save to ZIP
                 img_buffer = io.BytesIO()
@@ -336,7 +332,7 @@ def upload_background():
         if img.width > max_size or img.height > max_size:
             img.thumbnail((max_size, max_size), Image.Resampling.LANCZOS)
         
-        generator.background_image = img
+        generator.background_image = img  # type: ignore
         preview_cache.clear()
         
         return jsonify({'success': True, 'message': 'Background uploaded successfully'})
