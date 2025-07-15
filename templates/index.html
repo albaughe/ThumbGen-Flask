@@ -1,0 +1,2002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batch Thumbnail Generator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Dark Theme Styling */
+        body {
+            background: #23272b !important;
+            color: #f5f6fa !important;
+        }
+        
+        .card {
+            background: #2d3136 !important;
+            border-radius: 0 !important;
+            border: 1.5px solid #444 !important;
+            color: #f5f6fa !important;
+        }
+        
+        .section-card {
+            background: #353940 !important;
+            border-radius: 0 !important;
+            border: 1.5px solid #444 !important;
+            color: #f5f6fa !important;
+        }
+        
+        .section-card {
+            box-shadow: none;
+            padding: 0.7rem 0.8rem 0.5rem 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Prevent horizontal scrolling in left panel */
+        .slider-group {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            margin-bottom: 0;
+            flex-wrap: wrap;
+            min-height: 26px;
+        }
+        
+        .slider-group input[type="range"] {
+            min-width: 120px !important;
+            flex: 1;
+            max-width: none;
+        }
+        
+        .slider-group input[type="number"] {
+            min-width: 60px;
+            width: 60px !important;
+        }
+        
+        /* Force all content to stay within container */
+        .section-card {
+            overflow-x: hidden;
+        }
+        
+        /* Make all form elements responsive */
+        .form-control, .form-select {
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+        
+        /* Ensure color picker dropdowns don't overflow */
+        .color-picker-dropdown {
+            max-width: 100%;
+        }
+        
+        /* Make sure flex containers don't overflow */
+        .d-flex {
+            max-width: 100%;
+        }
+        
+        /* Ensure row and column layouts don't overflow */
+        .row {
+            margin-left: 0;
+            margin-right: 0;
+        }
+        
+        .col-4, .col-6 {
+            padding-left: 0.25rem;
+            padding-right: 0.25rem;
+        }
+        
+        .form-control, .form-select, .form-control-color, 
+        textarea, input[type="number"], input[type="text"] {
+            background: #40444b !important;
+            color: #e0e2e6 !important;
+            border: 1.5px solid #444 !important;
+            border-radius: 0 !important;
+            font-size: 13px;
+            padding: 2px 6px !important;
+            height: 26px !important;
+            vertical-align: middle;
+        }
+        
+        /* Slider styling - completely rewritten */
+        input[type=range].form-range {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 12px;
+            background: transparent;
+            outline: none;
+            margin: 0 2px;
+            vertical-align: middle;
+        }
+        
+        input[type=range].form-range::-webkit-slider-track {
+            width: 100%;
+            height: 4px;
+            background: #40444b;
+            border-radius: 0;
+            border: none;
+        }
+        
+        input[type=range].form-range::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #D73F09;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+            margin-top: -4px;
+        }
+        
+        input[type=range].form-range::-moz-range-track {
+            width: 100%;
+            height: 4px;
+            background: #40444b;
+            border-radius: 0;
+            border: none;
+        }
+        
+        input[type=range].form-range::-moz-range-thumb {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #D73F09;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+            margin-top: -4px;
+        }
+        
+        input[type=range].form-range::-ms-track {
+            width: 100%;
+            height: 4px;
+            background: #40444b;
+            border-radius: 0;
+            border: none;
+        }
+        
+        input[type=range].form-range::-ms-thumb {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #D73F09;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+            margin-top: -4px;
+        }
+        
+        /* Color Picker Dropdown Styles */
+        .color-picker-dropdown {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            vertical-align: middle;
+        }
+        
+        .color-display {
+            width: 32px;
+            height: 26px;
+            border: 1.5px solid #444;
+            border-radius: 0;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--selected-color, #ffffff);
+            position: relative;
+            vertical-align: middle;
+        }
+        
+        .color-display::after {
+            content: "▼";
+            position: absolute;
+            right: 2px;
+            bottom: 2px;
+            font-size: 8px;
+            color: #000;
+            text-shadow: 1px 1px 0 #fff;
+        }
+        
+        .color-dropdown-menu {
+            position: fixed;
+            background: #2d3136;
+            border: 1.5px solid #444;
+            border-radius: 0;
+            padding: 6px;
+            min-width: 180px;
+            max-width: 200px;
+            max-height: 300px;
+            z-index: 9999;
+            display: none;
+            box-shadow: 0 4px 8px #00000044;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        
+        .color-dropdown-menu.show {
+            display: block;
+        }
+        
+        .color-option {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px;
+            cursor: pointer;
+            border-radius: 0;
+            transition: background 0.15s;
+            margin-bottom: 2px;
+        }
+        
+        .color-option:hover {
+            background: #353940;
+        }
+        
+        .color-option.selected {
+            background: #40444b;
+            border-left: 3px solid #D73F09;
+        }
+        
+        .color-option-swatch {
+            width: 16px;
+            height: 16px;
+            border: 1px solid #444;
+            border-radius: 0;
+            flex-shrink: 0;
+        }
+        
+        .color-option-label {
+            color: #d0d2d6;
+            font-size: 12px;
+            flex-grow: 1;
+        }
+        
+        .custom-color-section {
+            border-bottom: 1px solid #444;
+            margin-bottom: 6px;
+            padding-bottom: 6px;
+        }
+        
+        .custom-color-picker-container {
+            position: fixed;
+            background: #2d3136;
+            border: 1.5px solid #444;
+            border-radius: 0;
+            padding: 10px;
+            z-index: 10001;
+            display: none;
+            box-shadow: 0 4px 8px #00000044;
+        }
+        
+        .custom-color-picker-container.show {
+            display: block;
+        }
+        
+        .custom-color-picker-container input[type="color"] {
+            width: 100%;
+            height: 40px;
+            border: 1.5px solid #444;
+            border-radius: 0;
+            background: #40444b;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .custom-color-picker-container .color-input-wrapper {
+            position: relative;
+            width: 100%;
+        }
+        
+        .custom-color-picker-container .click-here-label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #ffffff;
+            font-size: 12px;
+            pointer-events: none;
+            z-index: 1;
+            font-weight: bold;
+            text-shadow: 
+                -1px -1px 0 #000,
+                -1px 1px 0 #000,
+                1px -1px 0 #000,
+                1px 1px 0 #000,
+                0px -1px 0 #000,
+                0px 1px 0 #000,
+                -1px 0px 0 #000,
+                1px 0px 0 #000;
+        }
+        
+        .custom-color-picker-container .picker-buttons {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        
+        .custom-color-picker-container .picker-buttons button {
+            flex: 1;
+            padding: 4px 8px;
+            background: #353940;
+            color: #f5f6fa;
+            border: 1.5px solid #444;
+            border-radius: 0;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .custom-color-picker-container .picker-buttons button:hover {
+            background: #444;
+        }
+        
+        .custom-color-picker-container .picker-buttons button.confirm {
+            background: #D73F09;
+            color: #fff;
+        }
+        
+        /* Focus and Button Styles */
+        .form-control:focus, .form-select:focus, textarea:focus, 
+        input[type="number"]:focus, input[type="text"]:focus {
+            background: #484c54 !important;
+            color: #fff !important;
+            border-color: #D73F09 !important;
+            box-shadow: 0 0 0 1.5px #D73F0933 !important;
+        }
+        
+        label, .form-label, .section-title, .small, .radio-group label {
+            color: #d0d2d6 !important;
+            font-size: 13px;
+            line-height: 1.2;
+        }
+        
+        .btn-primary {
+            background: #D73F09 !important;
+            border: none !important;
+            color: #fff !important;
+        }
+        
+        .btn-secondary, .reset-btn {
+            background: #353940 !important;
+            color: #f5f6fa !important;
+            border: 1.5px solid #444 !important;
+        }
+        
+        .btn-secondary:hover, .reset-btn:hover {
+            background: #444 !important;
+            color: #fff !important;
+        }
+        
+        /* Navigation Tabs */
+        .nav-tabs {
+            background: #23272b !important;
+            border-bottom: 2px solid #444 !important;
+        }
+        
+        .nav-tabs .nav-link {
+            background: #353940 !important;
+            color: #d0d2d6 !important;
+            border: 1.5px solid #444 !important;
+            border-bottom: none !important;
+            border-radius: 0 !important;
+            margin-right: 2px;
+            font-size: 15px;
+            font-weight: 500;
+            padding: 0.4rem 1.2rem;
+            transition: background 0.15s;
+        }
+        
+        .nav-tabs .nav-link.active, .nav-tabs .nav-link:focus {
+            background: #40444b !important;
+            color: #fff !important;
+            border-bottom: 2.5px solid #D73F09 !important;
+            z-index: 2;
+        }
+        
+        .nav-tabs .nav-link:hover:not(.active) {
+            background: #353940cc !important;
+            color: #fff !important;
+        }
+        
+
+        
+
+        
+        .section-title {
+            font-weight: bold;
+            font-size: 1rem;
+            margin-bottom: .3rem;
+            color: #d0d2d6;
+            letter-spacing: 0.2px;
+        }
+        
+        .preview-image {
+            background: #23272b !important;
+            border: 1.5px solid #444 !important;
+            border-radius: 0 !important;
+        }
+        
+        .slider-group {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            margin-bottom: 0;
+            min-height: 26px;
+        }
+        
+        .reset-btn {
+            border-radius: 0 !important;
+            background: #353940 !important;
+            color: #f5f6fa !important;
+            border: 1.5px solid #444 !important;
+            font-size: 14px;
+            padding: 0 6px !important;
+            height: 26px !important;
+        }
+        
+        .preview-spinner {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #444;
+            border-top: 2px solid #D73F09;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        
+        .preview-spinner.active { opacity: 1; }
+        
+        @keyframes spin { 
+            0% { transform: rotate(0deg); } 
+            100% { transform: rotate(360deg); } 
+        }
+        
+        .filename-preview {
+            background: #2d3136;
+            border: 1.5px solid #444;
+            border-radius: 0 !important;
+            padding: 4px 8px;
+            color: #d0d2d6;
+        }
+        
+        /* Draggable overlay for individual tab */
+        .draggable-overlay {
+            position: absolute;
+            cursor: grab;
+            background: transparent;
+            display: none;
+            z-index: 10;
+        }
+        
+        .draggable-overlay:active {
+            cursor: grabbing;
+        }
+        
+        /* Utility classes for common inline styles */
+        /* Removed unused utility classes: .min-w-420, .max-w-600, .aspect-16-9, .w-50px, .w-60px, .w-70px, .w-80px, .w-100px, .w-120px, .h-92vh, .flex-1 */
+        
+        /* Ensure proper alignment for form elements */
+        .form-label {
+            display: inline-block;
+            vertical-align: middle;
+            margin-bottom: 2px;
+        }
+        
+        /* Prevent sliders from becoming too small */
+        .slider-group input[type="range"] {
+            min-width: 120px !important;
+            max-width: none;
+        }
+        
+        /* Ensure consistent height for all form elements */
+        .form-control, .form-select, input[type="range"], .color-display {
+            box-sizing: border-box;
+        }
+
+        /* New styles for alignment grid */
+        .alignment-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            width: 100%;
+            max-width: 80px;
+            margin: 0 auto;
+        }
+
+        .alignment-row {
+            display: flex;
+            gap: 2px;
+            justify-content: center;
+        }
+
+        .alignment-option {
+            cursor: pointer;
+        }
+
+        .alignment-option input[type="radio"] {
+            display: none; /* Hide default radio button */
+        }
+
+        .alignment-box {
+            width: 18px;
+            height: 18px;
+            border: 1px solid #444;
+            border-radius: 2px;
+            background: #6c757d; /* Light grey for unchecked */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.15s;
+        }
+
+        .alignment-option input[type="radio"]:checked + .alignment-box {
+            background: #D73F09;
+            border-color: #D73F09;
+        }
+
+        .alignment-option:hover .alignment-box {
+            background: #8a8d91; /* Lighter grey on hover */
+        }
+
+
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Thumbnail Generator</a>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row h-100 min-vh-80 justify-content-center">
+            <!-- Settings Panel -->
+            <div class="col-auto d-flex flex-column" style="width: 35vw; min-width:500px; max-width:45vw;">
+                <div class="card p-2" style="overflow-y:auto; height:fit-content; max-height:92vh;">
+                    <form id="settings-form">
+                        <!-- TEXT FIELD SECTION (moved to top) -->
+                        <div class="section-card">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <div class="section-title mb-0">Thumbnail Text</div>
+                                <button type="button" id="reset-all-btn" class="btn btn-secondary btn-sm ms-2">Reset All</button>
+                            </div>
+                            <label class="form-label">Text to Display (use ^ for number in batch mode):</label>
+                            <textarea class="form-control form-control-sm" name="text" id="text" rows="2">Week ^ Overview</textarea>
+                        </div>
+                        <!-- Font & Size Section -->
+                        <div class="section-card">
+                            <div class="section-title">Font & Size</div>
+                            <div class="row g-2">
+                                <div class="col-3">
+                                    <div class="mb-2">
+                                        <label class="form-label mb-0">Font:</label>
+                                        <select name="font_name" class="form-select form-select-sm">
+                                            {% for font in fonts %}
+                                            <option value="{{ font }}">{{ font }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-5">
+                                    <div class="mb-2">
+                                        <label class="form-label mb-0">Font Size:</label>
+                                        <div class="slider-group" data-default="100">
+                                            <input type="range" name="font_size" min="10" max="200" value="100" class="form-range">
+                                            <input type="number" min="1" max="500" value="100" class="form-control form-control-sm w-70px">
+                                            <button type="button" class="reset-btn btn btn-secondary btn-sm px-2 py-0">↺</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="mb-2">
+                                        <label class="form-label mb-0">Text Color:</label>
+                                        <div class="color-picker-dropdown" data-id="text-color">
+                                            <div class="color-display" data-target="text_color" style="--selected-color: #ffffff;"></div>
+                                            <input type="color" name="text_color" value="#ffffff" style="display: none;">
+                                            <div class="color-dropdown-menu"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Text Position & Spacing Section -->
+                        <div class="section-card">
+                            <div class="section-title">Text Position & Spacing</div>
+                            
+                            <!-- Position Controls -->
+                            <div class="mb-3">
+
+                                
+                                <!-- Position Sliders -->
+                                <div class="row g-2">
+                                    <div class="col-8">
+                                        <div class="mb-2">
+                                            <label class="form-label mb-0">Horizontal Position:</label>
+                                            <div class="slider-group" data-default="0">
+                                                <input type="range" name="text_x_offset" id="text_x_offset" min="-900" max="900" value="0" class="form-range">
+                                                <input type="number" min="-900" max="900" value="0" class="form-control form-control-sm w-70px">
+                                                <button type="button" class="reset-btn btn btn-secondary btn-sm px-2 py-0">↺</button>
+                                            </div>
+                                        </div>
+                                        <div class="mb-2">
+                                            <label class="form-label mb-0">Vertical Position:</label>
+                                            <div class="slider-group" data-default="0">
+                                                <input type="range" name="text_y_offset" id="text_y_offset" min="-900" max="900" value="0" class="form-range">
+                                                <input type="number" min="-900" max="900" value="0" class="form-control form-control-sm w-70px">
+                                                <button type="button" class="reset-btn btn btn-secondary btn-sm px-2 py-0">↺</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="form-label mb-0">Text Alignment:</label>
+                                        <div class="alignment-grid">
+                                            <div class="alignment-row">
+                                                <label class="alignment-option">
+                                                    <input type="radio" name="text_alignment" value="top_left">
+                                                    <div class="alignment-box"></div>
+                                                </label>
+                                                <label class="alignment-option">
+                                                    <input type="radio" name="text_alignment" value="top_center">
+                                                    <div class="alignment-box"></div>
+                                                </label>
+                                                <label class="alignment-option">
+                                                    <input type="radio" name="text_alignment" value="top_right">
+                                                    <div class="alignment-box"></div>
+                                                </label>
+                                            </div>
+                                            <div class="alignment-row">
+                                                <label class="alignment-option">
+                                                    <input type="radio" name="text_alignment" value="left">
+                                                    <div class="alignment-box"></div>
+                                                </label>
+                                                <label class="alignment-option">
+                                                    <input type="radio" name="text_alignment" value="center" checked>
+                                                    <div class="alignment-box"></div>
+                                                </label>
+                                                <label class="alignment-option">
+                                                    <input type="radio" name="text_alignment" value="right">
+                                                    <div class="alignment-box"></div>
+                                                </label>
+                                            </div>
+                                            <div class="alignment-row">
+                                                <label class="alignment-option">
+                                                    <input type="radio" name="text_alignment" value="bottom_left">
+                                                    <div class="alignment-box"></div>
+                                                </label>
+                                                <label class="alignment-option">
+                                                    <input type="radio" name="text_alignment" value="bottom_center">
+                                                    <div class="alignment-box"></div>
+                                                </label>
+                                                <label class="alignment-option">
+                                                    <input type="radio" name="text_alignment" value="bottom_right">
+                                                    <div class="alignment-box"></div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Spacing Controls -->
+                            <div class="row g-2">
+                                <div class="col-6">
+                                    <div class="mb-2">
+                                        <label class="form-label mb-0">Text Margins:</label>
+                                        <div class="slider-group" data-default="100">
+                                            <input type="range" name="text_margins" min="10" max="200" value="100" class="form-range">
+                                            <input type="number" min="0" max="500" value="100" class="form-control form-control-sm w-70px">
+                                            <button type="button" class="reset-btn btn btn-secondary btn-sm px-2 py-0">↺</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-2">
+                                        <label class="form-label mb-0">Line Spacing:</label>
+                                        <div class="slider-group" data-default="30">
+                                            <input type="range" name="line_spacing_factor" min="0" max="100" value="30" class="form-range">
+                                            <input type="number" min="0" max="300" value="30" class="form-control form-control-sm w-70px">
+                                            <button type="button" class="reset-btn btn btn-secondary btn-sm px-2 py-0">↺</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Text Effects Section -->
+                        <div class="section-card">
+                            <div class="section-title">Text Effects</div>
+                            
+                            <!-- Stroke Toggle -->
+                            <div class="mb-2 d-flex align-items-center gap-2">
+                                <input type="checkbox" name="text_stroke_enabled" id="text_stroke_enabled">
+                                <label for="text_stroke_enabled" class="mb-0 small">Enable Stroke</label>
+                            </div>
+                            
+                            <!-- Stroke Controls (initially hidden) -->
+                            <div id="stroke_controls" style="display: none;">
+                                <div class="mb-2">
+                                    <div class="row g-2">
+                                        <div class="col-6">
+                                            <label class="form-label mb-0">Stroke Color:</label>
+                                            <div class="color-picker-dropdown" data-id="text-stroke-color">
+                                                <div class="color-display" data-target="text_stroke_color" 
+                                                     style="--selected-color: #000000;"></div>
+                                                <input type="color" name="text_stroke_color" value="#000000" style="display: none;">
+                                                <div class="color-dropdown-menu">
+                                                    <!-- Color palette will be populated by JavaScript -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="form-label mb-0">Width:</label>
+                                            <div class="slider-group" data-default="2">
+                                                <input type="range" name="text_stroke_width" min="1" max="10" 
+                                                       value="2" class="form-range w-100">
+                                                <input type="number" min="1" max="30" value="2" 
+                                                       class="form-control form-control-sm w-100">
+                                                <button type="button" class="reset-btn btn btn-secondary btn-sm px-2 py-0">↺</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Background Box Toggle -->
+                            <div class="mb-2 d-flex align-items-center gap-2">
+                                <input type="checkbox" name="text_box_enabled" id="text_box_enabled">
+                                <label for="text_box_enabled" class="mb-0 small">Background Box</label>
+                            </div>
+                            
+                            <!-- Background Box Controls (initially hidden) -->
+                            <div id="background_box_controls" style="display: none;">
+                                <div class="mb-2">
+                                    <div class="row g-2">
+                                        <div class="col-4">
+                                            <label class="form-label mb-0">Box Color:</label>
+                                            <div class="color-picker-dropdown" data-id="text-box-color">
+                                                <div class="color-display" data-target="text_box_color" 
+                                                     style="--selected-color: #23272b;"></div>
+                                                <input type="color" name="text_box_color" value="#23272b" style="display: none;">
+                                                <div class="color-dropdown-menu">
+                                                    <!-- Color palette will be populated by JavaScript -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <label class="form-label mb-0">Padding:</label>
+                                            <div class="slider-group" data-default="20">
+                                                <input type="range" name="text_box_padding" min="5" max="50" 
+                                                       value="20" class="form-range w-100">
+                                                <input type="number" min="0" max="200" value="20" 
+                                                       class="form-control form-control-sm w-100">
+                                                <button type="button" class="reset-btn btn btn-secondary btn-sm px-2 py-0">↺</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <label class="form-label mb-0">Opacity:</label>
+                                            <div class="slider-group" data-default="100">
+                                                <input type="range" name="text_box_opacity" min="0" max="100" 
+                                                       value="100" class="form-range w-100">
+                                                <input type="number" min="0" max="255" value="100" 
+                                                       class="form-control form-control-sm w-100">
+                                                <button type="button" class="reset-btn btn btn-secondary btn-sm px-2 py-0">↺</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Background & Pattern Section -->
+                        <div class="section-card">
+                            <div class="section-title">Background & Pattern</div>
+                            <div class="mb-2">
+                                <label class="form-label mb-0">Background Color:</label>
+                                <div class="color-picker-dropdown" data-id="background-color">
+                                    <div class="color-display" data-target="background_color" 
+                                         style="--selected-color: #d73f09;"></div>
+                                    <input type="color" name="background_color" value="#d73f09" style="display: none;">
+                                    <div class="color-dropdown-menu">
+                                        <!-- Color palette will be populated by JavaScript -->
+                                    </div>
+                                </div>
+                            </div>
+                            
+
+                            
+                            <!-- Background Image Toggle -->
+                            <div class="mb-2 d-flex align-items-center gap-2">
+                                <input type="checkbox" name="background_image_enabled" id="background_image_enabled">
+                                <label for="background_image_enabled" class="mb-0 small">Enable Background Image</label>
+                            </div>
+                            
+                            <!-- Background Image Controls (initially hidden) -->
+                            <div id="background_image_controls" style="display: none;">
+                                <div class="mb-2">
+                                    <label class="form-label">Background Image:</label>
+                                    <select name="background_image" class="form-select form-select-sm">
+                                        {% for bg in backgrounds %}
+                                        <option value="{{ bg }}">{{ bg }}</option>
+                                        {% endfor %}
+                                        <option value="Custom">Upload Custom...</option>
+                                    </select>
+                                </div>
+                                <div class="mb-2">
+                                    <label class="form-label mb-0">Opacity:</label>
+                                    <div class="slider-group" data-default="100">
+                                        <input type="range" name="background_opacity" min="0" max="100" 
+                                               value="100" class="form-range w-60px">
+                                        <input type="number" min="0" max="100" value="100" 
+                                               class="form-control form-control-sm w-60px">
+                                        <button type="button" class="reset-btn btn btn-secondary btn-sm px-2 py-0">↺</button>
+                                    </div>
+                                </div>
+                                <div class="mb-2">
+                                    <div class="row g-2">
+                                        <div class="col-4">
+                                            <label class="form-label mb-0">Scale:</label>
+                                            <div class="slider-group" data-default="100">
+                                                <input type="range" name="bg_image_scale" min="10" max="200" 
+                                                       value="100" class="form-range w-100">
+                                                <input type="number" min="10" max="500" value="100" 
+                                                       class="form-control form-control-sm w-100">
+                                                <button type="button" class="reset-btn btn btn-secondary btn-sm px-2 py-0">↺</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <label class="form-label mb-0">X Offset:</label>
+                                            <div class="slider-group" data-default="0">
+                                                <input type="range" name="bg_image_x_offset" min="-200" max="200" 
+                                                       value="0" class="form-range w-100">
+                                                <input type="number" min="-500" max="500" value="0" 
+                                                       class="form-control form-control-sm w-100">
+                                                <button type="button" class="reset-btn btn btn-secondary btn-sm px-2 py-0">↺</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <label class="form-label mb-0">Y Offset:</label>
+                                            <div class="slider-group" data-default="0">
+                                                <input type="range" name="bg_image_y_offset" min="-200" max="200" 
+                                                       value="0" class="form-range w-100">
+                                                <input type="number" min="-500" max="500" value="0" 
+                                                       class="form-control form-control-sm w-100">
+                                                <button type="button" class="reset-btn btn btn-secondary btn-sm px-2 py-0">↺</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Pattern Toggle -->
+                            <div class="mb-2 d-flex align-items-center gap-2">
+                                <input type="checkbox" name="pattern_enabled" id="pattern_enabled">
+                                <label for="pattern_enabled" class="mb-0 small">Enable Pattern Overlay</label>
+                            </div>
+                            
+                            <!-- Pattern Controls (initially hidden) -->
+                            <div id="pattern_controls" style="display: none;">
+                                <div class="mb-2">
+                                    <label class="form-label">Pattern:</label>
+                                    <select name="pattern_overlay" class="form-select form-select-sm">
+                                        {% for pattern in patterns %}
+                                        <option value="{{ pattern }}">{{ pattern }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="mb-2 d-flex align-items-center gap-2 flex-wrap">
+                                    <input type="checkbox" name="pattern_color_enabled" id="pattern_color_enabled">
+                                    <label for="pattern_color_enabled" class="mb-0 small">Color Tint</label>
+                                    <div class="color-picker-dropdown" data-id="pattern-color">
+                                        <div class="color-display" data-target="pattern_color" 
+                                             style="--selected-color: #ffffff;"></div>
+                                        <input type="color" name="pattern_color" value="#ffffff" style="display: none;">
+                                        <div class="color-dropdown-menu">
+                                            <!-- Color palette will be populated by JavaScript -->
+                                        </div>
+                                    </div>
+                                    <label class="form-label mb-0 ms-2">Opacity:</label>
+                                    <div class="slider-group" data-default="100">
+                                        <input type="range" name="pattern_opacity" min="0" max="100" 
+                                               value="100" class="form-range w-60px">
+                                        <input type="number" min="0" max="100" value="100" 
+                                               class="form-control form-control-sm w-60px">
+                                        <button type="button" class="reset-btn btn btn-secondary btn-sm px-2 py-0">↺</button>
+                                    </div>
+                                </div>
+                                <div class="mb-2">
+                                    <div class="row g-2">
+                                        <div class="col-4">
+                                            <label class="form-label mb-0">Scale:</label>
+                                            <div class="slider-group" data-default="40">
+                                                <input type="range" name="pattern_scale" min="10" max="500" 
+                                                       value="40" class="form-range w-100">
+                                                <input type="number" min="10" max="1000" value="40" 
+                                                       class="form-control form-control-sm w-100">
+                                                <button type="button" class="reset-btn btn btn-secondary btn-sm px-2 py-0">↺</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <label class="form-label mb-0">X Offset:</label>
+                                            <div class="slider-group" data-default="0">
+                                                <input type="range" name="pattern_x_offset" min="-900" max="900" 
+                                                       value="0" class="form-range w-100">
+                                                <input type="number" min="-1000" max="1000" value="0" 
+                                                       class="form-control form-control-sm w-100">
+                                                <button type="button" class="reset-btn btn btn-secondary btn-sm px-2 py-0">↺</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <label class="form-label mb-0">Y Offset:</label>
+                                            <div class="slider-group" data-default="0">
+                                                <input type="range" name="pattern_y_offset" min="-900" max="900" 
+                                                       value="0" class="form-range w-100">
+                                                <input type="number" min="-1000" max="1000" value="0" 
+                                                       class="form-control form-control-sm w-100">
+                                                <button type="button" class="reset-btn btn btn-secondary btn-sm px-2 py-0">↺</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Preview Panel -->
+        <div class="col-auto d-flex flex-column position-relative" style="width: 35vw; min-width:500px; max-width:45vw;">
+            <div class="card p-2 d-flex flex-column align-items-center justify-content-start" 
+                 style="width: 100%; max-width: 98vw; margin: 0 auto;">
+                <h5 class="mb-2" style="align-self: flex-start;">Preview</h5>
+                <div class="preview-image position-relative d-flex align-items-center justify-content-center mb-2" 
+                     id="preview-container" 
+                     style="overflow: hidden; aspect-ratio: 16/9; width: 100%; max-width: 100%;">
+                    <div style="position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                        <img id="preview-img" style="display: none; width: 100%; height: 100%; object-fit: contain;">
+                        <div id="draggable-overlay" class="draggable-overlay"></div>
+                        <p id="preview-text" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); margin: 0;">
+                            Loading preview...
+                        </p>
+                        <div class="preview-spinner" id="preview-spinner"></div>
+                    </div>
+                </div>
+                
+                <!-- File & Text Settings (moved back under preview) -->
+                <div class="w-100 mb-2">
+                    <div class="section-card">
+                        <div class="section-title">File & Text</div>
+                        <div class="mb-2">
+                            <label class="form-label">File Name:</label>
+                            <input type="text" class="form-control form-control-sm" 
+                                   name="filename_base" id="filename_base" value="Thumbnail">
+                        </div>
+                        
+                        <!-- Batch Mode Toggle -->
+                        <div class="mb-2 d-flex align-items-center gap-2">
+                            <input type="checkbox" name="batch_mode" id="batch_mode">
+                            <label for="batch_mode" class="mb-0 small">Batch Mode</label>
+                        </div>
+                        
+                        <!-- Batch Controls (initially hidden) -->
+                        <div id="batch_controls" style="display: none;">
+                            <div class="mb-2 d-flex align-items-center gap-2">
+                                <div class="flex-1">
+                                    <label class="form-label">Start Number:</label>
+                                    <input type="number" class="form-control form-control-sm" 
+                                           name="start_number" id="start_number" min="1" max="1000" 
+                                           value="1" class="w-80px">
+                                </div>
+                                <div class="flex-1">
+                                    <label class="form-label">Number of Files:</label>
+                                    <input type="number" class="form-control form-control-sm" 
+                                           name="batch_count" id="batch_count" min="1" max="100" 
+                                           value="1" class="w-80px">
+                                </div>
+                            </div>
+                            <div class="mb-2">
+                                <h6 class="mb-1 small">Output Filenames</h6>
+                                <div class="filename-preview" id="filename-preview" style="font-size:12px;">
+                                    Files will appear here...
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Download Button -->
+                <div class="w-100 mb-1">
+                    <button type="button" class="btn btn-primary w-100 btn-sm" id="download-btn">
+                        Download PNG
+                    </button>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Color palette configuration
+        const colorPalette = {
+            primary: [
+                { value: '#d73f09', label: 'Beaver Orange' },
+                { value: '#000000', label: 'Paddletail Black' },
+                { value: '#FFFFFF', label: 'Bucktooth White' }
+            ],
+            secondary: [
+                { value: '#4A773C', label: 'Pine Stand' },
+                { value: '#00859B', label: 'High Tide' },
+                { value: '#FFB500', label: 'Luminance' },
+                { value: '#006A8E', label: 'Stratosphere' },
+                { value: '#C4D6A4', label: 'Reindeer Moss' },
+                { value: '#B8DDE1', label: 'Seafoam' },
+                { value: '#FDD26E', label: 'Candela' },
+                { value: '#C6DAE7', label: 'Moondust' },
+                { value: '#AA9D2E', label: 'Hop Bine' },
+                { value: '#0D5257', label: 'Rogue Wave' },
+                { value: '#D3832B', label: 'Solar Flare' },
+                { value: '#003B5C', label: 'Star Canvas' },
+                { value: '#B7A99A', label: 'Till' },
+                { value: '#A7ACA2', label: 'Coastline' },
+                { value: '#7A6855', label: 'High Desert' },
+                { value: '#8E9089', label: 'Crater' }
+            ]
+        };
+
+        function generateColorPaletteHTML(selectedValue = null) {
+            let html = `
+                <div class="custom-color-section">
+                    <div class="color-option" data-value="custom">
+                        <div class="color-option-swatch" 
+                             style="background: linear-gradient(45deg, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff);"></div>
+                        <span class="color-option-label">Custom Color</span>
+                    </div>
+                    <input type="color" class="custom-color-picker" style="display: none;">
+                </div>
+            `;
+            
+            // Primary colors
+            colorPalette.primary.forEach(color => {
+                const isSelected = selectedValue === color.value ? 'selected' : '';
+                html += `
+                    <div class="color-option ${isSelected}" data-value="${color.value}">
+                        <div class="color-option-swatch" style="background: ${color.value};"></div>
+                        <span class="color-option-label">${color.label}</span>
+                    </div>
+                `;
+            });
+            
+            // Secondary colors
+            colorPalette.secondary.forEach(color => {
+                const isSelected = selectedValue === color.value ? 'selected' : '';
+                html += `
+                    <div class="color-option ${isSelected}" data-value="${color.value}">
+                        <div class="color-option-swatch" style="background: ${color.value};"></div>
+                        <span class="color-option-label">${color.label}</span>
+                    </div>
+                `;
+            });
+            
+            return html;
+        }
+
+        // Function to replace color picker content
+        function replaceColorPickerContent() {
+            document.querySelectorAll('.color-dropdown-menu').forEach(menu => {
+                const selectedValue = menu.closest('.color-picker-dropdown').querySelector('input[type="color"]').value;
+                menu.innerHTML = generateColorPaletteHTML(selectedValue);
+            });
+        }
+        function setupToggleControl(checkboxId, controlsId, selectName) {
+            const checkbox = document.getElementById(checkboxId);
+            const controls = document.getElementById(controlsId);
+            const select = document.querySelector(`[name="${selectName}"]`);
+            if (checkbox && controls) {
+                checkbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        controls.style.display = 'block';
+                        if (select && select.options.length > 0) {
+                            select.selectedIndex = 0;
+                            select.dispatchEvent(new Event('change', { bubbles: true }));
+                        }
+                    } else {
+                        controls.style.display = 'none';
+                    }
+                    scheduleUpdate(50);
+                });
+            }
+        }
+
+
+
+        function setupToggleControls() {
+            // Background Image Toggle (with auto-selection)
+            const bgImageCheckbox = document.getElementById('background_image_enabled');
+            const bgImageControls = document.getElementById('background_image_controls');
+            const bgImageSelect = document.querySelector('[name="background_image"]');
+            
+            if (bgImageCheckbox && bgImageControls) {
+                bgImageCheckbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        bgImageControls.style.display = 'block';
+                        // Auto-select first background if available
+                        if (bgImageSelect && bgImageSelect.options.length > 0) {
+                            bgImageSelect.selectedIndex = 0;
+                            bgImageSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                        }
+                    } else {
+                        bgImageControls.style.display = 'none';
+                    }
+                    scheduleUpdate(50);
+                });
+            }
+            
+            // Pattern Toggle (with auto-selection)
+            const patternCheckbox = document.getElementById('pattern_enabled');
+            const patternControls = document.getElementById('pattern_controls');
+            const patternSelect = document.querySelector('[name="pattern_overlay"]');
+            
+            if (patternCheckbox && patternControls) {
+                patternCheckbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        patternControls.style.display = 'block';
+                        // Auto-select first pattern if available
+                        if (patternSelect && patternSelect.options.length > 0) {
+                            patternSelect.selectedIndex = 0;
+                            patternSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                        }
+                    } else {
+                        patternControls.style.display = 'none';
+                    }
+                    scheduleUpdate(50);
+                });
+            }
+            
+            // Text Effects Toggles
+            setupToggleControl('text_stroke_enabled', 'stroke_controls', null);
+            setupToggleControl('text_box_enabled', 'background_box_controls', null);
+        }
+        // Color picker dropdown functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            setupColorPickers();
+            setupXYSlider();
+            setupAllSliders();
+            setupAllInputs();
+            setupDraggableText();
+            
+            function setupColorPickers() {
+                document.querySelectorAll('.color-picker-dropdown').forEach(dropdown => {
+                    const display = dropdown.querySelector('.color-display');
+                    const menu = dropdown.querySelector('.color-dropdown-menu');
+                    const hiddenInput = dropdown.querySelector('input[type="color"]');
+                    let customPicker = dropdown.querySelector('.custom-color-picker');
+                    if (!customPicker) {
+                        customPicker = document.createElement('input');
+                        customPicker.type = 'color';
+                        customPicker.className = 'custom-color-picker';
+                        customPicker.style.display = 'none';
+                        dropdown.appendChild(customPicker);
+                    }
+                    
+                    // Toggle dropdown
+                    display.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        
+                        // Close other dropdowns
+                        document.querySelectorAll('.color-dropdown-menu.show').forEach(otherMenu => {
+                            if (otherMenu !== menu) {
+                                otherMenu.classList.remove('show');
+                            }
+                        });
+                        
+                        // Calculate position for fixed dropdown
+                        const rect = display.getBoundingClientRect();
+                        const dropdown = menu;
+                        
+                        // Position dropdown below the color display
+                        dropdown.style.top = (rect.bottom + 2) + 'px';
+                        dropdown.style.left = rect.left + 'px';
+                        
+                        // Check if dropdown would go off the right edge
+                        const dropdownWidth = 200; // max-width from CSS
+                        const windowWidth = window.innerWidth;
+                        if (rect.left + dropdownWidth > windowWidth) {
+                            dropdown.style.left = (windowWidth - dropdownWidth - 10) + 'px';
+                        }
+                        
+                        // Check if dropdown would go off the bottom edge
+                        const maxDropdownHeight = 300; // max-height from CSS
+                        const windowHeight = window.innerHeight;
+                        const availableSpaceBelow = windowHeight - rect.bottom - 10;
+                        const availableSpaceAbove = rect.top - 10;
+                        
+                        if (availableSpaceBelow < 150 && availableSpaceAbove > availableSpaceBelow) {
+                            // Position above the color display if there's more space above
+                            dropdown.style.top = (rect.top - Math.min(maxDropdownHeight, availableSpaceAbove) - 2) + 'px';
+                        } else if (availableSpaceBelow < 150) {
+                            // Position below but limit height to available space
+                            dropdown.style.maxHeight = availableSpaceBelow + 'px';
+                        }
+                        
+                        menu.classList.toggle('show');
+                    });
+                    
+                    // Handle color option clicks
+                    menu.addEventListener('click', function(e) {
+                        const option = e.target.closest('.color-option');
+                        if (!option) return;
+                        
+                        const value = option.getAttribute('data-value');
+                        
+                        if (value === 'custom') {
+                            // Show custom color picker container
+                            const customContainer = document.getElementById('custom-color-picker-container');
+                            const customInput = document.getElementById('custom-color-input');
+                            const menuRect = menu.getBoundingClientRect();
+                            
+                            // Position the custom color picker above the dropdown menu
+                            customContainer.style.top = (menuRect.top - 80) + 'px';
+                            customContainer.style.left = (menuRect.left + 10) + 'px';
+                            customContainer.classList.add('show');
+                            
+                            // Set current color as default
+                            customInput.value = hiddenInput.value;
+                            
+                            // Store reference to current dropdown for confirmation
+                            customContainer.dataset.currentDropdown = dropdown.dataset.id || 'default';
+                            return;
+                        }
+                        
+                        // Update selection
+                        menu.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('selected'));
+                        option.classList.add('selected');
+                        
+                        // Update display and hidden input
+                        display.style.setProperty('--selected-color', value);
+                        hiddenInput.value = value;
+                        
+                        // Trigger change event
+                        hiddenInput.dispatchEvent(new Event('input', { bubbles: true }));
+                        
+                        // Close dropdown
+                        menu.classList.remove('show');
+                    });
+                    
+
+                });
+                
+                // Function to calculate relative luminance for accessibility
+                function getRelativeLuminance(hexColor) {
+                    const r = parseInt(hexColor.slice(1, 3), 16) / 255;
+                    const g = parseInt(hexColor.slice(3, 5), 16) / 255;
+                    const b = parseInt(hexColor.slice(5, 7), 16) / 255;
+                    
+                    const rsRGB = r <= 0.03928 ? r / 12.92 : Math.pow((r + 0.055) / 1.055, 2.4);
+                    const gsRGB = g <= 0.03928 ? g / 12.92 : Math.pow((g + 0.055) / 1.055, 2.4);
+                    const bsRGB = b <= 0.03928 ? b / 12.92 : Math.pow((b + 0.055) / 1.055, 2.4);
+                    
+                    return 0.2126 * rsRGB + 0.7152 * gsRGB + 0.0722 * bsRGB;
+                }
+                
+                // Function to update label color based on background for accessibility
+                function updateLabelColor(colorInput, label) {
+                    const color = colorInput.value;
+                    const luminance = getRelativeLuminance(color);
+                    
+                    // Use black text with white outline for light backgrounds
+                    // Use white text with black outline for dark backgrounds
+                    if (luminance > 0.5) {
+                        label.style.color = '#000000';
+                        label.style.textShadow = `
+                            -1px -1px 0 #fff,
+                            -1px 1px 0 #fff,
+                            1px -1px 0 #fff,
+                            1px 1px 0 #fff,
+                            0px -1px 0 #fff,
+                            0px 1px 0 #fff,
+                            -1px 0px 0 #fff,
+                            1px 0px 0 #fff
+                        `;
+                    } else {
+                        label.style.color = '#ffffff';
+                        label.style.textShadow = `
+                            -1px -1px 0 #000,
+                            -1px 1px 0 #000,
+                            1px -1px 0 #000,
+                            1px 1px 0 #000,
+                            0px -1px 0 #000,
+                            0px 1px 0 #000,
+                            -1px 0px 0 #000,
+                            1px 0px 0 #000
+                        `;
+                    }
+                }
+                
+                // Setup custom color picker container
+                const customContainer = document.getElementById('custom-color-picker-container');
+                const customInput = document.getElementById('custom-color-input');
+                const cancelBtn = customContainer.querySelector('.cancel-btn');
+                const confirmBtn = customContainer.querySelector('.confirm-btn');
+                const clickHereLabel = customContainer.querySelector('.click-here-label');
+                
+                // Cancel button
+                cancelBtn.addEventListener('click', function() {
+                    customContainer.classList.remove('show');
+                });
+                
+                // Update label color when custom color input changes
+                customInput.addEventListener('input', function() {
+                    updateLabelColor(customInput, clickHereLabel);
+                });
+                
+                // Confirm button
+                confirmBtn.addEventListener('click', function() {
+                    const customColor = customInput.value;
+                    const dropdownId = customContainer.dataset.currentDropdown;
+                    
+                    // Find the dropdown that opened the custom picker
+                    const dropdown = document.querySelector(`[data-id="${dropdownId}"]`) || 
+                                   document.querySelector('.color-picker-dropdown');
+                    
+                    if (dropdown) {
+                        const display = dropdown.querySelector('.color-display');
+                        const hiddenInput = dropdown.querySelector('input[type="color"]');
+                        const menu = dropdown.querySelector('.color-dropdown-menu');
+                        
+                        // Clear selection from preset options
+                        menu.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('selected'));
+                        
+                        // Update display and hidden input
+                        display.style.setProperty('--selected-color', customColor);
+                        hiddenInput.value = customColor;
+                        
+                        // Trigger change event
+                        hiddenInput.dispatchEvent(new Event('input', { bubbles: true }));
+                        
+                        // Close dropdown and custom picker
+                        menu.classList.remove('show');
+                        customContainer.classList.remove('show');
+                    }
+                });
+                
+                // Close custom picker when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!e.target.closest('.custom-color-picker-container') && 
+                        !e.target.closest('.color-picker-dropdown')) {
+                        customContainer.classList.remove('show');
+                    }
+                });
+                
+                // Close dropdowns when clicking outside
+                document.addEventListener('click', function(e) {
+                    // Don't close if clicking inside a color picker dropdown
+                    if (e.target.closest('.color-picker-dropdown')) {
+                        return;
+                    }
+                    
+                    document.querySelectorAll('.color-dropdown-menu.show').forEach(menu => {
+                        menu.classList.remove('show');
+                    });
+                });
+                
+                // Close dropdowns on window resize
+                window.addEventListener('resize', function() {
+                    document.querySelectorAll('.color-dropdown-menu.show').forEach(menu => {
+                        menu.classList.remove('show');
+                    });
+                });
+            }
+        });
+
+        // Utility functions
+        function clamp(val, min, max) { 
+            return Math.max(min, Math.min(max, val)); 
+        }
+
+        // XY Slider functionality for text positioning
+        function updateXYDotFromInputs() {
+            const xInput = document.getElementById('text_x_offset');
+            const yInput = document.getElementById('text_y_offset');
+            const dot = document.getElementById('xy-dot');
+            
+            if (xInput && yInput && dot) {
+                const x = parseInt(xInput.value) || 0;
+                const y = parseInt(yInput.value) || 0;
+                const px = 60 + (x / 900) * 60;
+                const py = 60 + (y / 900) * 60;
+                dot.style.left = px + 'px';
+                dot.style.top = py + 'px';
+            }
+        }
+
+        function updateInputsFromXYDot(px, py) {
+            const x = Math.round(((px - 60) / 60) * 900);
+            const y = Math.round(((py - 60) / 60) * 900);
+            const xInput = document.getElementById('text_x_offset');
+            const yInput = document.getElementById('text_y_offset');
+            
+            if (xInput && yInput) {
+                xInput.value = clamp(x, -900, 900);
+                yInput.value = clamp(y, -900, 900);
+            }
+        }
+
+        function setupXYSlider() {
+            const slider = document.getElementById('xy-slider');
+            const dot = document.getElementById('xy-dot');
+            if (!slider || !dot) return;
+            
+            let dragging = false;
+            
+            dot.addEventListener('pointerdown', function(e) {
+                dragging = true;
+                dot.setPointerCapture(e.pointerId);
+            });
+            
+            dot.addEventListener('pointerup', function(e) {
+                dragging = false;
+                dot.releasePointerCapture(e.pointerId);
+            });
+            
+            dot.addEventListener('pointermove', function(e) {
+                if (!dragging) return;
+                const rect = slider.getBoundingClientRect();
+                let px = clamp(e.clientX - rect.left, 0, 120);
+                let py = clamp(e.clientY - rect.top, 0, 120);
+                updateInputsFromXYDot(px, py);
+                updateXYDotFromInputs();
+                scheduleUpdate(50);
+            });
+            
+            const xInput = document.getElementById('text_x_offset');
+            const yInput = document.getElementById('text_y_offset');
+            const resetBtn = document.getElementById('xy-reset');
+            
+            if (xInput) {
+                xInput.addEventListener('input', function() {
+                    updateXYDotFromInputs();
+                    scheduleUpdate(50);
+                });
+            }
+            
+            if (yInput) {
+                yInput.addEventListener('input', function() {
+                    updateXYDotFromInputs();
+                    scheduleUpdate(50);
+                });
+            }
+            
+            if (resetBtn) {
+                resetBtn.addEventListener('click', function() {
+                    if (xInput) xInput.value = 0;
+                    if (yInput) yInput.value = 0;
+                    updateXYDotFromInputs();
+                    scheduleUpdate(50);
+                });
+            }
+            
+            updateXYDotFromInputs();
+        }
+
+        // Slider and input synchronization
+        function setupAllSliders() {
+            document.querySelectorAll('.slider-group').forEach(function(group) {
+                const range = group.querySelector('input[type="range"]');
+                const number = group.querySelector('input[type="number"]');
+                const reset = group.querySelector('.reset-btn');
+                const defaultVal = group.dataset.default;
+                
+                if (range && number) {
+                    range.addEventListener('input', function() {
+                        number.value = range.value;
+                        scheduleUpdate(50);
+                    });
+                    number.addEventListener('input', function() {
+                        range.value = number.value;
+                        scheduleUpdate(150);
+                    });
+                }
+                
+                if (reset && range && number && defaultVal) {
+                    reset.addEventListener('click', function() {
+                        range.value = defaultVal;
+                        number.value = defaultVal;
+                        scheduleUpdate(50);
+                    });
+                }
+                        });
+        }
+
+        // Universal input event listeners
+        function setupAllInputs() {
+            document.querySelectorAll('form input, form select, form textarea').forEach(function(input) {
+                if (['range', 'number', 'color', 'text'].includes(input.type) || 
+                    input.tagName === 'SELECT' || input.tagName === 'TEXTAREA') {
+                    input.addEventListener('input', function() {
+                        scheduleUpdate(50);
+                    });
+                }
+                if (input.type === 'radio' || input.type === 'checkbox') {
+                    input.addEventListener('change', function() {
+                        scheduleUpdate(50);
+                    });
+                }
+            });
+        }
+
+        // Draggable text functionality
+        function setupDraggableText() {
+            const previewContainer = document.getElementById('preview-container');
+            const overlay = document.getElementById('draggable-overlay');
+            const xInput = document.getElementById('text_x_offset');
+            const yInput = document.getElementById('text_y_offset');
+            const form = document.getElementById('settings-form');
+            const img = document.getElementById('preview-img');
+
+            if (!previewContainer || !overlay || !xInput || !yInput) return;
+
+            function syncDraggableOverlay() {
+                if (img.style.display === 'none') {
+                    overlay.style.display = 'none';
+                    return;
+                }
+                const containerRect = previewContainer.getBoundingClientRect();
+                const imgRect = img.getBoundingClientRect();
+                let left = imgRect.left - containerRect.left;
+                let top = imgRect.top - containerRect.top;
+                let width = imgRect.width;
+                let height = imgRect.height;
+                overlay.style.display = 'block';
+                overlay.style.left = left + 'px';
+                overlay.style.top = top + 'px';
+                overlay.style.width = width + 'px';
+                overlay.style.height = height + 'px';
+                overlay.style.position = 'absolute';
+                overlay.style.pointerEvents = 'auto';
+            }
+
+            xInput.addEventListener('input', syncDraggableOverlay);
+            yInput.addEventListener('input', syncDraggableOverlay);
+            if (form) {
+                const textInput = form.querySelector('[name="text"]');
+                if (textInput) textInput.addEventListener('input', syncDraggableOverlay);
+            }
+            img.addEventListener('load', syncDraggableOverlay);
+            window.addEventListener('resize', syncDraggableOverlay);
+
+            let dragging = false;
+            let startX, startY, startOffsetX, startOffsetY;
+
+            overlay.addEventListener('pointerdown', function(e) {
+                dragging = true;
+                overlay.setPointerCapture(e.pointerId);
+                startX = e.clientX;
+                startY = e.clientY;
+                startOffsetX = parseInt(xInput.value) || 0;
+                startOffsetY = parseInt(yInput.value) || 0;
+                overlay.style.cursor = 'grabbing';
+            });
+            
+            overlay.addEventListener('pointerup', function(e) {
+                dragging = false;
+                overlay.releasePointerCapture(e.pointerId);
+                overlay.style.cursor = 'grab';
+            });
+            
+            overlay.addEventListener('pointermove', function(e) {
+                if (!dragging) return;
+                const overlayRect = overlay.getBoundingClientRect();
+                const dx = e.clientX - startX;
+                const dy = e.clientY - startY;
+                const pxPerX = overlayRect.width / 1800;
+                const pxPerY = overlayRect.height / 1800;
+                let newX = startOffsetX + Math.round(dx / pxPerX);
+                let newY = startOffsetY + Math.round(dy / pxPerY);
+                newX = Math.max(-900, Math.min(900, newX));
+                newY = Math.max(-900, Math.min(900, newY));
+                xInput.value = newX;
+                yInput.value = newY;
+                updateXYDotFromInputs();
+                scheduleUpdate(50);
+            });
+
+            setTimeout(syncDraggableOverlay, 500);
+        }
+
+        // Update scheduling and preview management
+        let updateTimeout;
+        let currentRequest = null;
+        const responseCache = new Map();
+
+        function getActiveForm() {
+            return document.getElementById('settings-form');
+        }
+
+        function getActivePreviewElements() {
+            return {
+                img: document.getElementById('preview-img'),
+                text: document.getElementById('preview-text'),
+                spinner: document.getElementById('preview-spinner')
+            };
+        }
+
+        function scheduleUpdate(delay = 0) {
+            clearTimeout(updateTimeout);
+            updateTimeout = setTimeout(() => {
+                updatePreview();
+                updateFilenames();
+            }, delay);
+        }
+
+        function createRequestKey(formData) {
+            const entries = Array.from(formData.entries()).sort(([a], [b]) => a.localeCompare(b));
+            return entries.map(([key, value]) => `${key}=${value}`).join('&');
+        }
+
+        // Preview update functionality
+        async function updatePreview() {
+            try {
+                const form = getActiveForm();
+                const preview = getActivePreviewElements();
+
+                if (!form || !preview.img || !preview.text) return;
+
+                const formData = new FormData(form);
+                formData.set('start_number', 1);
+
+                const requestKey = createRequestKey(formData);
+
+                // Check cache
+                if (responseCache.has(requestKey)) {
+                    const cachedData = responseCache.get(requestKey);
+                    if (Date.now() - cachedData.timestamp < 5000) {
+                        updatePreviewImage(cachedData.data);
+                        return;
+                    } else {
+                        responseCache.delete(requestKey);
+                    }
+                }
+
+                // Cancel previous request
+                if (currentRequest) {
+                    currentRequest.abort();
+                }
+
+                const controller = new AbortController();
+                currentRequest = controller;
+
+                if (preview.spinner) {
+                    preview.spinner.classList.add('active');
+                }
+
+                const response = await fetch('/preview', {
+                    method: 'POST',
+                    body: formData,
+                    signal: controller.signal
+                });
+
+                const data = await response.json();
+
+                if (preview.spinner) {
+                    preview.spinner.classList.remove('active');
+                }
+
+                if (data.success) {
+                    responseCache.set(requestKey, {
+                        data: data,
+                        timestamp: Date.now()
+                    });
+
+                    if (responseCache.size > 50) {
+                        const oldestKey = responseCache.keys().next().value;
+                        responseCache.delete(oldestKey);
+                    }
+
+                    updatePreviewImage(data);
+                } else {
+                    preview.text.textContent = `Error: ${data.error}`;
+                    preview.text.style.display = 'block';
+                    preview.img.style.display = 'none';
+                }
+
+                currentRequest = null;
+
+            } catch (error) {
+                const preview = getActivePreviewElements();
+                if (error.name !== 'AbortError') {
+                    if (preview.spinner) {
+                        preview.spinner.classList.remove('active');
+                    }
+                    preview.text.textContent = `Error: ${error.message}`;
+                    preview.text.style.display = 'block';
+                    preview.img.style.display = 'none';
+                }
+            }
+        }
+
+        function updatePreviewImage(data) {
+            const preview = getActivePreviewElements();
+            if (preview.img && preview.text) {
+                preview.img.src = data.image;
+                preview.img.style.display = 'block';
+                preview.text.style.display = 'none';
+                
+                // Sync draggable overlay
+                setTimeout(() => {
+                    const overlay = document.getElementById('draggable-overlay');
+                    if (overlay) {
+                        const previewContainer = document.getElementById('preview-container');
+                        const img = document.getElementById('preview-img');
+                        if (previewContainer && img) {
+                            const containerRect = previewContainer.getBoundingClientRect();
+                            const imgRect = img.getBoundingClientRect();
+                            overlay.style.display = 'block';
+                            overlay.style.left = (imgRect.left - containerRect.left) + 'px';
+                            overlay.style.top = (imgRect.top - containerRect.top) + 'px';
+                            overlay.style.width = imgRect.width + 'px';
+                            overlay.style.height = imgRect.height + 'px';
+                        }
+                    }
+                }, 100);
+            }
+        }
+
+        // Filename preview for batch mode
+        function updateFilenames() {
+            const batchMode = document.getElementById('batch_mode');
+            if (!batchMode || !batchMode.checked) return;
+
+            const fileBase = document.getElementById('filename_base');
+            const startNum = document.getElementById('start_number');
+            const count = document.getElementById('batch_count');
+            const previewEl = document.getElementById('filename-preview');
+            const textInput = document.getElementById('text');
+
+            if (!fileBase || !startNum || !count || !previewEl || !textInput) return;
+
+            const startNumber = parseInt(startNum.value) || 1;
+            const batchCount = parseInt(count.value) || 1;
+            const textTemplate = textInput.value;
+            const fileBaseValue = fileBase.value;
+
+            let preview = 'Files that will be generated:\n';
+            const showCount = Math.min(batchCount, 10);
+
+            for (let i = 0; i < showCount; i++) {
+                const number = startNumber + i;
+                // Find the number used in the text (replace ^ with number)
+                const textForImage = textTemplate.replace(/\^/g, number);
+                // Filename: FileName_number.png
+                preview += `${fileBaseValue}_${number}.png\n`;
+            }
+
+            if (batchCount > 10) {
+                preview += `... and ${batchCount - 10} more files`;
+            }
+
+            previewEl.textContent = preview;
+        }
+
+        // Download functions
+        async function downloadThumbnail() {
+            const btn = document.getElementById('download-btn');
+            if (!btn) return;
+            
+            const originalText = btn.textContent;
+            const batchMode = document.getElementById('batch_mode');
+
+            try {
+                btn.textContent = batchMode && batchMode.checked ? 'Generating...' : 'Downloading...';
+                btn.disabled = true;
+
+                                const formData = new FormData(document.getElementById('settings-form'));
+                
+                // Add batch parameters manually since they're outside the form
+                const filenameBase = document.getElementById('filename_base');
+                const startNumber = document.getElementById('start_number');
+                const batchCount = document.getElementById('batch_count');
+                const batchModeCheckbox = document.getElementById('batch_mode');
+                
+                if (filenameBase) formData.set('filename_base', filenameBase.value);
+                if (startNumber) formData.set('start_number', startNumber.value);
+                if (batchCount) formData.set('batch_count', batchCount.value);
+                if (batchModeCheckbox) formData.set('batch_mode', batchModeCheckbox.checked ? 'on' : 'off');
+                
+                const endpoint = batchMode && batchMode.checked ? '/generate' : '/individual';
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    const blob = await response.blob();
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    
+                    if (batchMode && batchMode.checked) {
+                        a.download = `thumbnails_${new Date().toISOString().slice(0,19).replace(/:/g, '-')}.zip`;
+                    } else {
+                        a.download = `thumbnail_${new Date().toISOString().slice(0,19).replace(/:/g, '-')}.png`;
+                    }
+                    
+                    document.body.appendChild(a);
+                    a.click();
+                    URL.revokeObjectURL(url);
+                    document.body.removeChild(a);
+                } else {
+                    const data = await response.json();
+                    throw new Error(data.error || 'Download failed');
+                }
+            } catch (error) {
+                alert(`Download failed: ${error.message}`);
+            } finally {
+                btn.textContent = batchMode && batchMode.checked ? 'Generate & Download ZIP' : 'Download PNG';
+                btn.disabled = false;
+            }
+        }
+
+        // Initialize everything when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set default colors
+            const textColorInputs = document.querySelectorAll('input[name="text_color"]');
+            textColorInputs.forEach(input => input.value = '#ffffff');
+            
+            const bgColorInputs = document.querySelectorAll('input[name="background_color"]');
+            bgColorInputs.forEach(input => input.value = '#d73f09');
+            
+            // Populate all color palettes
+            replaceColorPickerContent();
+            
+            // Setup show/hide functionality for background and pattern controls
+            setupToggleControls();
+            
+            // Setup batch mode toggle
+            const batchMode = document.getElementById('batch_mode');
+            const batchControls = document.getElementById('batch_controls');
+            const downloadBtn = document.getElementById('download-btn');
+            
+            if (batchMode && batchControls) {
+                batchMode.addEventListener('change', function() {
+                    if (this.checked) {
+                        batchControls.style.display = 'block';
+                        if (downloadBtn) downloadBtn.textContent = 'Generate & Download ZIP';
+                    } else {
+                        batchControls.style.display = 'none';
+                        if (downloadBtn) downloadBtn.textContent = 'Download PNG';
+                    }
+                    updateFilenames();
+                });
+            }
+            
+            // Setup event listeners for form
+            const form = document.getElementById('settings-form');
+            if (form) {
+                form.addEventListener('change', () => scheduleUpdate(50));
+                form.addEventListener('input', () => scheduleUpdate(50));
+            }
+
+            // Batch controls
+            const startNumber = document.getElementById('start_number');
+            const batchCount = document.getElementById('batch_count');
+            
+            if (startNumber) {
+                startNumber.addEventListener('input', () => {
+                    updateFilenames();
+                });
+            }
+            
+            if (batchCount) {
+                batchCount.addEventListener('input', () => {
+                    updateFilenames();
+                });
+            }
+
+            // Button events
+            if (downloadBtn) downloadBtn.addEventListener('click', downloadThumbnail);
+
+            // Initial updates
+            scheduleUpdate(0);
+            updateFilenames();
+        });
+
+        // --- Undo/Redo and Reset All Implementation ---
+        const form = document.getElementById('settings-form');
+        const resetAllBtn = document.getElementById('reset-all-btn');
+        let undoStack = [];
+        let isRestoring = false;
+        // Store default values for reset
+        const defaultValues = {};
+        if (form) {
+            Array.from(form.elements).forEach(el => {
+                if (el.name) {
+                    if (el.type === 'checkbox' || el.type === 'radio') {
+                        defaultValues[el.name] = el.checked;
+                    } else {
+                        defaultValues[el.name] = el.value;
+                    }
+                }
+            });
+        }
+        function getFormSnapshot() {
+            const snapshot = {};
+            Array.from(form.elements).forEach(el => {
+                if (el.name) {
+                    if (el.type === 'checkbox' || el.type === 'radio') {
+                        snapshot[el.name] = el.checked;
+                    } else {
+                        snapshot[el.name] = el.value;
+                    }
+                }
+            });
+            return snapshot;
+        }
+        function setFormSnapshot(snapshot) {
+            isRestoring = true;
+            Array.from(form.elements).forEach(el => {
+                if (el.name && snapshot.hasOwnProperty(el.name)) {
+                    if (el.type === 'checkbox' || el.type === 'radio') {
+                        el.checked = snapshot[el.name];
+                    } else {
+                        el.value = snapshot[el.name];
+                    }
+                    el.dispatchEvent(new Event('input', { bubbles: true }));
+                    el.dispatchEvent(new Event('change', { bubbles: true }));
+                }
+            });
+            isRestoring = false;
+        }
+        // Save snapshot on every change
+        if (form) {
+            form.addEventListener('input', function(e) {
+                if (!isRestoring) {
+                    undoStack.push(getFormSnapshot());
+                    if (undoStack.length > 100) undoStack.shift();
+                }
+            }, true);
+            form.addEventListener('change', function(e) {
+                if (!isRestoring) {
+                    undoStack.push(getFormSnapshot());
+                    if (undoStack.length > 100) undoStack.shift();
+                }
+            }, true);
+        }
+        // Undo with Ctrl+Z or Cmd+Z
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'z' && undoStack.length > 0) {
+                e.preventDefault();
+                const last = undoStack.pop();
+                if (last) setFormSnapshot(last);
+            }
+        });
+        // Reset All button
+        if (resetAllBtn) {
+            resetAllBtn.addEventListener('click', function() {
+                setFormSnapshot(defaultValues);
+                undoStack = [];
+            });
+        }
+        // ... existing code ...
+    </script>
+    
+    <!-- Custom Color Picker Container -->
+    <div class="custom-color-picker-container" id="custom-color-picker-container">
+        <div class="color-input-wrapper">
+            <input type="color" id="custom-color-input" value="#ffffff">
+            <div class="click-here-label">Click here</div>
+        </div>
+        <div class="picker-buttons">
+            <button type="button" class="cancel-btn">Cancel</button>
+            <button type="button" class="confirm-btn confirm">Confirm</button>
+        </div>
+    </div>
+</body>
+</html>
