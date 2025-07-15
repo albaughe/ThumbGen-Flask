@@ -1335,6 +1335,13 @@
                 // Update label color when custom color input changes
                 customInput.addEventListener('input', function() {
                     updateLabelColor(customInput, clickHereLabel);
+                    // Always show hex code in the label
+                    clickHereLabel.textContent = customInput.value.toUpperCase();
+                });
+                
+                // When opening the custom color picker, set label to hex
+                customInput.addEventListener('focus', function() {
+                    clickHereLabel.textContent = customInput.value.toUpperCase();
                 });
                 
                 // Confirm button
