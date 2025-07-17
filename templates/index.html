@@ -64,16 +64,6 @@
             box-sizing: border-box;
         }
         
-        /* Ensure color picker dropdowns don't overflow */
-        .color-picker-dropdown {
-            max-width: 100%;
-        }
-        
-        /* Make sure flex containers don't overflow */
-        .d-flex {
-            max-width: 100%;
-        }
-        
         /* Ensure row and column layouts don't overflow */
         .row {
             margin-left: 0;
@@ -168,189 +158,6 @@
             margin-top: -4px;
         }
         
-        /* Color Picker Dropdown Styles */
-        .color-picker-dropdown {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-            vertical-align: middle;
-        }
-        
-        .color-display {
-            width: 32px;
-            height: 26px;
-            border: 1.5px solid #444;
-            border-radius: 0;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--selected-color, #ffffff);
-            position: relative;
-            vertical-align: middle;
-        }
-        
-        .color-display::after {
-            content: "▼";
-            position: absolute;
-            right: 2px;
-            bottom: 2px;
-            font-size: 8px;
-            color: #000;
-            text-shadow: 1px 1px 0 #fff;
-        }
-        
-        .color-dropdown-menu {
-            position: fixed;
-            background: #2d3136;
-            border: 1.5px solid #444;
-            border-radius: 0;
-            padding: 6px;
-            min-width: 180px;
-            max-width: 200px;
-            max-height: 300px;
-            z-index: 9999;
-            display: none;
-            box-shadow: 0 4px 8px #00000044;
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
-        
-        .color-dropdown-menu.show {
-            display: block;
-        }
-        
-        .color-option {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 4px;
-            cursor: pointer;
-            border-radius: 0;
-            transition: background 0.15s;
-            margin-bottom: 2px;
-        }
-        
-        .color-option:hover {
-            background: #353940;
-        }
-        
-        .color-option.selected {
-            background: #40444b;
-            border-left: 3px solid #D73F09;
-        }
-        
-        .color-option-swatch {
-            width: 16px;
-            height: 16px;
-            border: 1px solid #444;
-            border-radius: 0;
-            flex-shrink: 0;
-        }
-        
-        .color-option-label {
-            color: #d0d2d6;
-            font-size: 12px;
-            flex-grow: 1;
-        }
-        
-        .custom-color-section {
-            border-bottom: 1px solid #444;
-            margin-bottom: 6px;
-            padding-bottom: 6px;
-        }
-        
-        .custom-color-picker-container {
-            position: fixed;
-            background: #2d3136;
-            border: 1.5px solid #444;
-            border-radius: 0;
-            padding: 10px;
-            z-index: 10001;
-            display: none;
-            box-shadow: 0 4px 8px #00000044;
-        }
-        
-        .custom-color-picker-container.show {
-            display: block;
-        }
-        
-        .custom-color-picker-container input[type="color"] {
-            width: 100%;
-            height: 40px;
-            border: 1.5px solid #444;
-            border-radius: 0;
-            background: #40444b;
-            cursor: pointer;
-            position: absolute;
-            left: 200px;
-            top: 0;
-            opacity: 0;
-        }
-        
-
-        
-        .custom-color-picker-container .color-input-wrapper {
-            position: relative;
-            width: 100%;
-        }
-        
-        .custom-color-picker-container .dummy-color-input {
-            width: 100%;
-            height: 40px;
-            border: 1.5px solid #444;
-            border-radius: 0;
-            background: #ffffff;
-            cursor: pointer;
-        }
-        
-        .custom-color-picker-container .click-here-label {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: #ffffff;
-            font-size: 12px;
-            pointer-events: none;
-            z-index: 1;
-            font-weight: bold;
-            text-shadow: 
-                -1px -1px 0 #000,
-                -1px 1px 0 #000,
-                1px -1px 0 #000,
-                1px 1px 0 #000,
-                0px -1px 0 #000,
-                0px 1px 0 #000,
-                -1px 0px 0 #000,
-                1px 0px 0 #000;
-        }
-        
-        .custom-color-picker-container .picker-buttons {
-            display: flex;
-            gap: 8px;
-            margin-top: 8px;
-        }
-        
-        .custom-color-picker-container .picker-buttons button {
-            flex: 1;
-            padding: 4px 8px;
-            background: #353940;
-            color: #f5f6fa;
-            border: 1.5px solid #444;
-            border-radius: 0;
-            cursor: pointer;
-            font-size: 12px;
-        }
-        
-        .custom-color-picker-container .picker-buttons button:hover {
-            background: #444;
-        }
-        
-        .custom-color-picker-container .picker-buttons button.confirm {
-            background: #D73F09;
-            color: #fff;
-        }
-        
         /* Focus and Button Styles */
         .form-control:focus, .form-select:focus, textarea:focus, 
         input[type="number"]:focus, input[type="text"]:focus {
@@ -413,10 +220,6 @@
             background: #353940cc !important;
             color: #fff !important;
         }
-        
-
-        
-
         
         .section-title {
             font-weight: bold;
@@ -492,9 +295,6 @@
             cursor: grabbing;
         }
         
-        /* Utility classes for common inline styles */
-        /* Removed unused utility classes: .min-w-420, .max-w-600, .aspect-16-9, .w-50px, .w-60px, .w-70px, .w-80px, .w-100px, .w-120px, .h-92vh, .flex-1 */
-        
         /* Ensure proper alignment for form elements */
         .form-label {
             display: inline-block;
@@ -509,7 +309,7 @@
         }
         
         /* Ensure consistent height for all form elements */
-        .form-control, .form-select, input[type="range"], .color-display {
+        .form-control, .form-select, input[type="range"] {
             box-sizing: border-box;
         }
 
@@ -558,6 +358,72 @@
             background: #8a8d91; /* Lighter grey on hover */
         }
 
+        /* Custom Dropdown Styling */
+        .custom-dropdown {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .dropdown-header {
+            background: #40444b;
+            border: 1.5px solid #444;
+            border-radius: 0;
+            padding: 4px 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 13px;
+            color: #e0e2e6;
+            transition: border-color 0.15s ease;
+        }
+
+        .dropdown-header:hover {
+            border-color: #D73F09;
+        }
+
+        .dropdown-arrow {
+            font-size: 10px;
+            color: #d0d2d6;
+            transition: transform 0.15s ease;
+        }
+
+        .dropdown-header.active .dropdown-arrow {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-options {
+            position: fixed;
+            background: #40444b;
+            border: 1.5px solid #444;
+            border-radius: 3px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 9999;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            min-width: 200px;
+        }
+
+        .dropdown-option {
+            padding: 6px 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            font-size: 13px;
+            color: #e0e2e6;
+            transition: background 0.15s ease;
+        }
+
+        .dropdown-option:hover {
+            background: #484c54;
+        }
+
+        .dropdown-option.selected {
+            background: #D73F09;
+            color: #fff;
+        }
+
 
     </style>
 </head>
@@ -581,14 +447,15 @@
                                 <div class="section-title mb-0">Thumbnail Text</div>
                                 <button type="button" id="reset-all-btn" class="btn btn-secondary btn-sm ms-2">Reset All</button>
                             </div>
-                            <label class="form-label">Text to Display (use ^ for number in batch mode):</label>
-                            <textarea class="form-control form-control-sm" name="text" id="text" rows="2">Week ^ Overview</textarea>
-                        </div>
-                        <!-- Font & Size Section -->
+                                <label class="form-label">Text to Display (use ^ for number in batch mode):</label>
+                                <textarea class="form-control form-control-sm" name="text" id="text" rows="2">Week ^ Overview</textarea>
+                            </div>
+                        <!-- Font & Size and Text Color Sections Side by Side -->
                         <div class="section-card">
+                            <div class="row g-2 align-items-stretch">
+                                <!-- Font & Size (Left) -->
+                                <div class="col-6 pe-4" style="border-right: 2px solid #444;">
                             <div class="section-title">Font & Size</div>
-                            <div class="row g-2">
-                                <div class="col-3">
                                     <div class="mb-2">
                                         <label class="form-label mb-0">Font:</label>
                                         <select name="font_name" class="form-select form-select-sm">
@@ -597,8 +464,6 @@
                                             {% endfor %}
                                         </select>
                                     </div>
-                                </div>
-                                <div class="col-5">
                                     <div class="mb-2">
                                         <label class="form-label mb-0">Font Size:</label>
                                         <div class="slider-group" data-default="100">
@@ -608,14 +473,116 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-4">
+                                <!-- Text Color (Right) -->
+                                <div class="col-6 ps-4">
+                                    <div class="section-title">Text Color</div>
+                                    
+                                    <!-- Color Selection Row -->
                                     <div class="mb-2">
-                                        <label class="form-label mb-0">Text Color:</label>
-                                        <div class="color-picker-dropdown" data-id="text-color">
-                                            <div class="color-display" data-target="text_color" style="--selected-color: #ffffff;"></div>
-                                            <input type="color" name="text_color" value="#ffffff" style="display: none;">
-                                            <div class="color-dropdown-menu"></div>
+                                        <div class="row g-2">
+                                            <!-- Branded Colors Dropdown -->
+                                            <div class="col-6">
+                                                <label class="form-label mb-0">Branded Colors:</label>
+                                                <div class="custom-dropdown">
+                                                    <div class="dropdown-header" id="text-branded-dropdown-header">
+                                                        <span id="text-branded-text">Bucktooth White</span>
+                                                        <span class="dropdown-arrow">▼</span>
+                                                    </div>
+                                                    <div class="dropdown-options" id="text-branded-options" style="display: none;">
+                                                        <div class="dropdown-option" data-color="#FFFFFF" data-name="Bucktooth White">
+                                                            <div class="color-swatch" style="background: #FFFFFF; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                            <span>Bucktooth White</span>
+                                                        </div>
+                                                        <div class="dropdown-option" data-color="#000000" data-name="Paddletail Black">
+                                                            <div class="color-swatch" style="background: #000000; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                            <span>Paddletail Black</span>
+                                                        </div>
+                                                        <div class="dropdown-option" data-color="#D73F09" data-name="Beaver Orange">
+                                                            <div class="color-swatch" style="background: #D73F09; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                            <span>Beaver Orange</span>
+                                                        </div>
+                                                        <div class="dropdown-option" data-color="#4A773C" data-name="Pine Stand">
+                                                            <div class="color-swatch" style="background: #4A773C; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                            <span>Pine Stand</span>
+                                                        </div>
+                                                        <div class="dropdown-option" data-color="#00859B" data-name="High Tide">
+                                                            <div class="color-swatch" style="background: #00859B; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                            <span>High Tide</span>
+                                                        </div>
+                                                        <div class="dropdown-option" data-color="#FFB500" data-name="Luminance">
+                                                            <div class="color-swatch" style="background: #FFB500; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                            <span>Luminance</span>
+                                                        </div>
+                                                        <div class="dropdown-option" data-color="#006A8E" data-name="Stratosphere">
+                                                            <div class="color-swatch" style="background: #006A8E; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                            <span>Stratosphere</span>
+                                                        </div>
+                                                        <div class="dropdown-option" data-color="#C4D6A4" data-name="Reindeer Moss">
+                                                            <div class="color-swatch" style="background: #C4D6A4; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                            <span>Reindeer Moss</span>
+                                                        </div>
+                                                        <div class="dropdown-option" data-color="#B8DDE1" data-name="Seafoam">
+                                                            <div class="color-swatch" style="background: #B8DDE1; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                            <span>Seafoam</span>
+                                                        </div>
+                                                        <div class="dropdown-option" data-color="#FDD26E" data-name="Candela">
+                                                            <div class="color-swatch" style="background: #FDD26E; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                            <span>Candela</span>
+                                                        </div>
+                                                        <div class="dropdown-option" data-color="#C6DAE7" data-name="Moondust">
+                                                            <div class="color-swatch" style="background: #C6DAE7; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                            <span>Moondust</span>
+                                                        </div>
+                                                        <div class="dropdown-option" data-color="#AA9D2E" data-name="Hop Bine">
+                                                            <div class="color-swatch" style="background: #AA9D2E; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                            <span>Hop Bine</span>
+                                                        </div>
+                                                        <div class="dropdown-option" data-color="#0D5257" data-name="Rogue Wave">
+                                                            <div class="color-swatch" style="background: #0D5257; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                            <span>Rogue Wave</span>
+                                                        </div>
+                                                        <div class="dropdown-option" data-color="#D3832B" data-name="Solar Flare">
+                                                            <div class="color-swatch" style="background: #D3832B; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                            <span>Solar Flare</span>
+                                                        </div>
+                                                        <div class="dropdown-option" data-color="#003B5C" data-name="Star Canvas">
+                                                            <div class="color-swatch" style="background: #003B5C; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                            <span>Star Canvas</span>
+                                                        </div>
+                                                        <div class="dropdown-option" data-color="#B7A99A" data-name="Till">
+                                                            <div class="color-swatch" style="background: #B7A99A; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                            <span>Till</span>
+                                                        </div>
+                                                        <div class="dropdown-option" data-color="#A7ACA2" data-name="Coastline">
+                                                            <div class="color-swatch" style="background: #A7ACA2; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                            <span>Coastline</span>
+                                                        </div>
+                                                        <div class="dropdown-option" data-color="#7A6855" data-name="High Desert">
+                                                            <div class="color-swatch" style="background: #7A6855; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                            <span>High Desert</span>
+                                                        </div>
+                                                        <div class="dropdown-option" data-color="#8E9089" data-name="Crater">
+                                                            <div class="color-swatch" style="background: #8E9089; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                            <span>Crater</span>
+                                                        </div>
+                                                        <div class="dropdown-option" data-color="custom" data-name="Custom">
+                                                            <div class="color-swatch" style="background: linear-gradient(45deg, #ccc 25%, transparent 25%), linear-gradient(-45deg, #ccc 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #ccc 75%), linear-gradient(-45deg, transparent 75%, #ccc 75%); background-size: 4px 4px; background-position: 0 0, 0 2px, 2px -2px, -2px 0px; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                            <span>Custom Color</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Hex Code Input -->
+                                            <div class="col-6">
+                                                <label class="form-label mb-0">Hex Code:</label>
+                                                <input type="text" id="text-hex-input" class="form-control form-control-sm" placeholder="#FFFFFF" value="#FFFFFF" maxlength="7">
+                                            </div>
                                         </div>
+                                    </div>
+                                    
+                                    <div class="mb-2 d-flex align-items-center">
+                                        <input type="color" name="text_color" value="#FFFFFF" class="form-control form-control-color">
                                     </div>
                                 </div>
                             </div>
@@ -627,8 +594,6 @@
                             
                             <!-- Position Controls -->
                             <div class="mb-3">
-
-                                
                                 <!-- Position Sliders -->
                                 <div class="row g-2">
                                     <div class="col-8">
@@ -740,12 +705,102 @@
                                     <div class="row g-2">
                                         <div class="col-6">
                                             <label class="form-label mb-0">Stroke Color:</label>
-                                            <div class="color-picker-dropdown" data-id="text-stroke-color">
-                                                <div class="color-display" data-target="text_stroke_color" 
-                                                     style="--selected-color: #000000;"></div>
-                                                <input type="color" name="text_stroke_color" value="#000000" style="display: none;">
-                                                <div class="color-dropdown-menu">
-                                                    <!-- Color palette will be populated by JavaScript -->
+                                            <div class="row g-2">
+                                                <div class="col-6">
+                                                    <div class="custom-dropdown">
+                                                        <div class="dropdown-header" id="stroke-branded-dropdown-header">
+                                                            <span id="stroke-branded-text">Paddletail Black</span>
+                                                            <span class="dropdown-arrow">▼</span>
+                                                        </div>
+                                                        <div class="dropdown-options" id="stroke-branded-options" style="display: none;">
+                                                            <div class="dropdown-option" data-color="#FFFFFF" data-name="Bucktooth White">
+                                                                <div class="color-swatch" style="background: #FFFFFF; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                                <span>Bucktooth White</span>
+                                                            </div>
+                                                            <div class="dropdown-option" data-color="#000000" data-name="Paddletail Black">
+                                                                <div class="color-swatch" style="background: #000000; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                                <span>Paddletail Black</span>
+                                                            </div>
+                                                            <div class="dropdown-option" data-color="#D73F09" data-name="Beaver Orange">
+                                                                <div class="color-swatch" style="background: #D73F09; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                                <span>Beaver Orange</span>
+                                                            </div>
+                                                            <div class="dropdown-option" data-color="#4A773C" data-name="Pine Stand">
+                                                                <div class="color-swatch" style="background: #4A773C; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                                <span>Pine Stand</span>
+                                                            </div>
+                                                            <div class="dropdown-option" data-color="#00859B" data-name="High Tide">
+                                                                <div class="color-swatch" style="background: #00859B; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                                <span>High Tide</span>
+                                                            </div>
+                                                            <div class="dropdown-option" data-color="#FFB500" data-name="Luminance">
+                                                                <div class="color-swatch" style="background: #FFB500; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                                <span>Luminance</span>
+                                                            </div>
+                                                            <div class="dropdown-option" data-color="#006A8E" data-name="Stratosphere">
+                                                                <div class="color-swatch" style="background: #006A8E; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                                <span>Stratosphere</span>
+                                                            </div>
+                                                            <div class="dropdown-option" data-color="#C4D6A4" data-name="Reindeer Moss">
+                                                                <div class="color-swatch" style="background: #C4D6A4; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                                <span>Reindeer Moss</span>
+                                                            </div>
+                                                            <div class="dropdown-option" data-color="#B8DDE1" data-name="Seafoam">
+                                                                <div class="color-swatch" style="background: #B8DDE1; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                                <span>Seafoam</span>
+                                                            </div>
+                                                            <div class="dropdown-option" data-color="#FDD26E" data-name="Candela">
+                                                                <div class="color-swatch" style="background: #FDD26E; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                                <span>Candela</span>
+                                                            </div>
+                                                            <div class="dropdown-option" data-color="#C6DAE7" data-name="Moondust">
+                                                                <div class="color-swatch" style="background: #C6DAE7; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                                <span>Moondust</span>
+                                                            </div>
+                                                            <div class="dropdown-option" data-color="#AA9D2E" data-name="Hop Bine">
+                                                                <div class="color-swatch" style="background: #AA9D2E; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                                <span>Hop Bine</span>
+                                                            </div>
+                                                            <div class="dropdown-option" data-color="#0D5257" data-name="Rogue Wave">
+                                                                <div class="color-swatch" style="background: #0D5257; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                                <span>Rogue Wave</span>
+                                                            </div>
+                                                            <div class="dropdown-option" data-color="#D3832B" data-name="Solar Flare">
+                                                                <div class="color-swatch" style="background: #D3832B; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                                <span>Solar Flare</span>
+                                                            </div>
+                                                            <div class="dropdown-option" data-color="#003B5C" data-name="Star Canvas">
+                                                                <div class="color-swatch" style="background: #003B5C; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                                <span>Star Canvas</span>
+                                                            </div>
+                                                            <div class="dropdown-option" data-color="#B7A99A" data-name="Till">
+                                                                <div class="color-swatch" style="background: #B7A99A; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                                <span>Till</span>
+                                                            </div>
+                                                            <div class="dropdown-option" data-color="#A7ACA2" data-name="Coastline">
+                                                                <div class="color-swatch" style="background: #A7ACA2; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                                <span>Coastline</span>
+                                                            </div>
+                                                            <div class="dropdown-option" data-color="#7A6855" data-name="High Desert">
+                                                                <div class="color-swatch" style="background: #7A6855; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                                <span>High Desert</span>
+                                                            </div>
+                                                            <div class="dropdown-option" data-color="#8E9089" data-name="Crater">
+                                                                <div class="color-swatch" style="background: #8E9089; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                                <span>Crater</span>
+                                                            </div>
+                                                            <div class="dropdown-option" data-color="custom" data-name="Custom">
+                                                                <div class="color-swatch" style="background: linear-gradient(45deg, #ccc 25%, transparent 25%), linear-gradient(-45deg, #ccc 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #ccc 75%), linear-gradient(-45deg, transparent 75%, #ccc 75%); background-size: 4px 4px; background-position: 0 0, 0 2px, 2px -2px, -2px 0px; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                                <span>Custom Color</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <input type="text" id="stroke-hex-input" class="form-control form-control-sm" placeholder="#000000" value="#000000" maxlength="7">
+                                                </div>
+                                                <div class="col-2">
+                                                    <input type="color" name="text_stroke_color" value="#000000" class="form-control form-control-color">
                                                 </div>
                                             </div>
                                         </div>
@@ -775,12 +830,102 @@
                                     <div class="row g-2">
                                         <div class="col-4">
                                             <label class="form-label mb-0">Box Color:</label>
-                                            <div class="color-picker-dropdown" data-id="text-box-color">
-                                                <div class="color-display" data-target="text_box_color" 
-                                                     style="--selected-color: #23272b;"></div>
-                                                <input type="color" name="text_box_color" value="#23272b" style="display: none;">
-                                                <div class="color-dropdown-menu">
-                                                    <!-- Color palette will be populated by JavaScript -->
+                                            <div class="row g-2">
+                                                <div class="col-6">
+                                                    <div class="custom-dropdown">
+                                                        <div class="dropdown-header" id="box-branded-dropdown-header">
+                                                            <span id="box-branded-text">Dark Gray</span>
+                                                            <span class="dropdown-arrow">▼</span>
+                                                        </div>
+                                                        <div class="dropdown-options" id="box-branded-options" style="display: none;">
+                                                            <div class="dropdown-option" data-color="#FFFFFF" data-name="Bucktooth White">
+                                                                <div class="color-swatch" style="background: #FFFFFF; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                                <span>Bucktooth White</span>
+                                                            </div>
+                                                            <div class="dropdown-option" data-color="#000000" data-name="Paddletail Black">
+                                                                <div class="color-swatch" style="background: #000000; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                                <span>Paddletail Black</span>
+                                                            </div>
+                                                            <div class="dropdown-option" data-color="#D73F09" data-name="Beaver Orange">
+                                                                <div class="color-swatch" style="background: #D73F09; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                                <span>Beaver Orange</span>
+                                                            </div>
+                                                            <div class="dropdown-option" data-color="#4A773C" data-name="Pine Stand">
+                                                                <div class="color-swatch" style="background: #4A773C; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                                <span>Pine Stand</span>
+                                                            </div>
+                                                            <div class="dropdown-option" data-color="#00859B" data-name="High Tide">
+                                                                <div class="color-swatch" style="background: #00859B; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                                <span>High Tide</span>
+                                                            </div>
+                                                            <div class="dropdown-option" data-color="#FFB500" data-name="Luminance">
+                                                                <div class="color-swatch" style="background: #FFB500; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                                <span>Luminance</span>
+                                                            </div>
+                                                            <div class="dropdown-option" data-color="#006A8E" data-name="Stratosphere">
+                                                                <div class="color-swatch" style="background: #006A8E; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                                <span>Stratosphere</span>
+                                                            </div>
+                                                            <div class="dropdown-option" data-color="#C4D6A4" data-name="Reindeer Moss">
+                                                                <div class="color-swatch" style="background: #C4D6A4; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                                <span>Reindeer Moss</span>
+                                                            </div>
+                                                            <div class="dropdown-option" data-color="#B8DDE1" data-name="Seafoam">
+                                                                <div class="color-swatch" style="background: #B8DDE1; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                                <span>Seafoam</span>
+                                                            </div>
+                                                            <div class="dropdown-option" data-color="#FDD26E" data-name="Candela">
+                                                                <div class="color-swatch" style="background: #FDD26E; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                                <span>Candela</span>
+                                                            </div>
+                                                            <div class="dropdown-option" data-color="#C6DAE7" data-name="Moondust">
+                                                                <div class="color-swatch" style="background: #C6DAE7; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                                <span>Moondust</span>
+                                                            </div>
+                                                            <div class="dropdown-option" data-color="#AA9D2E" data-name="Hop Bine">
+                                                                <div class="color-swatch" style="background: #AA9D2E; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                                <span>Hop Bine</span>
+                                                            </div>
+                                                            <div class="dropdown-option" data-color="#0D5257" data-name="Rogue Wave">
+                                                                <div class="color-swatch" style="background: #0D5257; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                                <span>Rogue Wave</span>
+                                                            </div>
+                                                            <div class="dropdown-option" data-color="#D3832B" data-name="Solar Flare">
+                                                                <div class="color-swatch" style="background: #D3832B; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                                <span>Solar Flare</span>
+                                                            </div>
+                                                            <div class="dropdown-option" data-color="#003B5C" data-name="Star Canvas">
+                                                                <div class="color-swatch" style="background: #003B5C; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                                <span>Star Canvas</span>
+                                                            </div>
+                                                            <div class="dropdown-option" data-color="#B7A99A" data-name="Till">
+                                                                <div class="color-swatch" style="background: #B7A99A; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                                <span>Till</span>
+                                                            </div>
+                                                            <div class="dropdown-option" data-color="#A7ACA2" data-name="Coastline">
+                                                                <div class="color-swatch" style="background: #A7ACA2; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                                <span>Coastline</span>
+                                                            </div>
+                                                            <div class="dropdown-option" data-color="#7A6855" data-name="High Desert">
+                                                                <div class="color-swatch" style="background: #7A6855; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                                <span>High Desert</span>
+                                                            </div>
+                                                            <div class="dropdown-option" data-color="#8E9089" data-name="Crater">
+                                                                <div class="color-swatch" style="background: #8E9089; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                                <span>Crater</span>
+                                                            </div>
+                                                            <div class="dropdown-option" data-color="custom" data-name="Custom">
+                                                                <div class="color-swatch" style="background: linear-gradient(45deg, #ccc 25%, transparent 25%), linear-gradient(-45deg, #ccc 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #ccc 75%), linear-gradient(-45deg, transparent 75%, #ccc 75%); background-size: 4px 4px; background-position: 0 0, 0 2px, 2px -2px, -2px 0px; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                                <span>Custom Color</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <input type="text" id="box-hex-input" class="form-control form-control-sm" placeholder="#23272b" value="#23272b" maxlength="7">
+                                                </div>
+                                                <div class="col-2">
+                                                    <input type="color" name="text_box_color" value="#23272b" class="form-control form-control-color">
                                                 </div>
                                             </div>
                                         </div>
@@ -814,18 +959,105 @@
                             <div class="section-title">Background & Pattern</div>
                             <div class="mb-2">
                                 <label class="form-label mb-0">Background Color:</label>
-                                <div class="color-picker-dropdown" data-id="background-color">
-                                    <div class="color-display" data-target="background_color" 
-                                         style="--selected-color: #d73f09;"></div>
-                                    <input type="color" name="background_color" value="#d73f09" style="display: none;">
-                                    <div class="color-dropdown-menu">
-                                        <!-- Color palette will be populated by JavaScript -->
+                                <div class="row g-2">
+                                    <div class="col-6">
+                                        <div class="custom-dropdown">
+                                            <div class="dropdown-header" id="bg-branded-dropdown-header">
+                                                <span id="bg-branded-text">Beaver Orange</span>
+                                                <span class="dropdown-arrow">▼</span>
+                                            </div>
+                                            <div class="dropdown-options" id="bg-branded-options" style="display: none;">
+                                                <div class="dropdown-option" data-color="#FFFFFF" data-name="Bucktooth White">
+                                                    <div class="color-swatch" style="background: #FFFFFF; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                    <span>Bucktooth White</span>
+                                                </div>
+                                                <div class="dropdown-option" data-color="#000000" data-name="Paddletail Black">
+                                                    <div class="color-swatch" style="background: #000000; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                    <span>Paddletail Black</span>
+                                                </div>
+                                                <div class="dropdown-option" data-color="#D73F09" data-name="Beaver Orange">
+                                                    <div class="color-swatch" style="background: #D73F09; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                    <span>Beaver Orange</span>
+                                                </div>
+                                                <div class="dropdown-option" data-color="#4A773C" data-name="Pine Stand">
+                                                    <div class="color-swatch" style="background: #4A773C; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                    <span>Pine Stand</span>
+                                                </div>
+                                                <div class="dropdown-option" data-color="#00859B" data-name="High Tide">
+                                                    <div class="color-swatch" style="background: #00859B; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                    <span>High Tide</span>
+                                                </div>
+                                                <div class="dropdown-option" data-color="#FFB500" data-name="Luminance">
+                                                    <div class="color-swatch" style="background: #FFB500; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                    <span>Luminance</span>
+                                                </div>
+                                                <div class="dropdown-option" data-color="#006A8E" data-name="Stratosphere">
+                                                    <div class="color-swatch" style="background: #006A8E; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                    <span>Stratosphere</span>
+                                                </div>
+                                                <div class="dropdown-option" data-color="#C4D6A4" data-name="Reindeer Moss">
+                                                    <div class="color-swatch" style="background: #C4D6A4; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                    <span>Reindeer Moss</span>
+                                                </div>
+                                                <div class="dropdown-option" data-color="#B8DDE1" data-name="Seafoam">
+                                                    <div class="color-swatch" style="background: #B8DDE1; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                    <span>Seafoam</span>
+                                                </div>
+                                                <div class="dropdown-option" data-color="#FDD26E" data-name="Candela">
+                                                    <div class="color-swatch" style="background: #FDD26E; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                    <span>Candela</span>
+                                                </div>
+                                                <div class="dropdown-option" data-color="#C6DAE7" data-name="Moondust">
+                                                    <div class="color-swatch" style="background: #C6DAE7; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                    <span>Moondust</span>
+                                                </div>
+                                                <div class="dropdown-option" data-color="#AA9D2E" data-name="Hop Bine">
+                                                    <div class="color-swatch" style="background: #AA9D2E; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                    <span>Hop Bine</span>
+                                                </div>
+                                                <div class="dropdown-option" data-color="#0D5257" data-name="Rogue Wave">
+                                                    <div class="color-swatch" style="background: #0D5257; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                    <span>Rogue Wave</span>
+                                                </div>
+                                                <div class="dropdown-option" data-color="#D3832B" data-name="Solar Flare">
+                                                    <div class="color-swatch" style="background: #D3832B; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                    <span>Solar Flare</span>
+                                                </div>
+                                                <div class="dropdown-option" data-color="#003B5C" data-name="Star Canvas">
+                                                    <div class="color-swatch" style="background: #003B5C; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                    <span>Star Canvas</span>
+                                                </div>
+                                                <div class="dropdown-option" data-color="#B7A99A" data-name="Till">
+                                                    <div class="color-swatch" style="background: #B7A99A; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                    <span>Till</span>
+                                                </div>
+                                                <div class="dropdown-option" data-color="#A7ACA2" data-name="Coastline">
+                                                    <div class="color-swatch" style="background: #A7ACA2; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                    <span>Coastline</span>
+                                                </div>
+                                                <div class="dropdown-option" data-color="#7A6855" data-name="High Desert">
+                                                    <div class="color-swatch" style="background: #7A6855; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                    <span>High Desert</span>
+                                                </div>
+                                                <div class="dropdown-option" data-color="#8E9089" data-name="Crater">
+                                                    <div class="color-swatch" style="background: #8E9089; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                    <span>Crater</span>
+                                                </div>
+                                                <div class="dropdown-option" data-color="custom" data-name="Custom">
+                                                    <div class="color-swatch" style="background: linear-gradient(45deg, #ccc 25%, transparent 25%), linear-gradient(-45deg, #ccc 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #ccc 75%), linear-gradient(-45deg, transparent 75%, #ccc 75%); background-size: 4px 4px; background-position: 0 0, 0 2px, 2px -2px, -2px 0px; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                    <span>Custom Color</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <input type="text" id="bg-hex-input" class="form-control form-control-sm" placeholder="#D73F09" value="#D73F09" maxlength="7">
+                                    </div>
+                                    <div class="col-2">
+                                        <input type="color" name="background_color" value="#d73f09" class="form-control form-control-color">
                                     </div>
                                 </div>
                             </div>
-                            
-
-                            
                             
                             <!-- Background Image Toggle -->
                             <div class="mb-2 d-flex align-items-center gap-2">
@@ -908,21 +1140,120 @@
                                 <div class="mb-2 d-flex align-items-center gap-2 flex-wrap">
                                     <input type="checkbox" name="pattern_color_enabled" id="pattern_color_enabled">
                                     <label for="pattern_color_enabled" class="mb-0 small">Color Tint</label>
-                                    <div class="color-picker-dropdown" data-id="pattern-color">
-                                        <div class="color-display" data-target="pattern_color" 
-                                             style="--selected-color: #ffffff;"></div>
-                                        <input type="color" name="pattern_color" value="#ffffff" style="display: none;">
-                                        <div class="color-dropdown-menu">
-                                            <!-- Color palette will be populated by JavaScript -->
+                                    <div class="color-section mb-2">
+                                        <label class="form-label mb-0">Pattern Color:</label>
+                                        <div class="row g-2">
+                                            <div class="col-6">
+                                                <div class="custom-dropdown">
+                                                    <div class="dropdown-header" id="pattern-branded-dropdown-header">
+                                                        <span id="pattern-branded-text">Bucktooth White</span>
+                                                        <span class="dropdown-arrow">▼</span>
+                                                    </div>
+                                                    <div class="dropdown-options" id="pattern-branded-options" style="display: none;">
+                                                        <div class="dropdown-option" data-color="#FFFFFF" data-name="Bucktooth White">
+                                                            <div class="color-swatch" style="background: #FFFFFF; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                            <span>Bucktooth White</span>
+                                                        </div>
+                                                        <div class="dropdown-option" data-color="#000000" data-name="Paddletail Black">
+                                                            <div class="color-swatch" style="background: #000000; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                            <span>Paddletail Black</span>
+                                                        </div>
+                                                        <div class="dropdown-option" data-color="#D73F09" data-name="Beaver Orange">
+                                                            <div class="color-swatch" style="background: #D73F09; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                            <span>Beaver Orange</span>
+                                                        </div>
+                                                        <div class="dropdown-option" data-color="#4A773C" data-name="Pine Stand">
+                                                            <div class="color-swatch" style="background: #4A773C; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                            <span>Pine Stand</span>
+                                                        </div>
+                                                        <div class="dropdown-option" data-color="#00859B" data-name="High Tide">
+                                                            <div class="color-swatch" style="background: #00859B; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                            <span>High Tide</span>
+                                                        </div>
+                                                        <div class="dropdown-option" data-color="#FFB500" data-name="Luminance">
+                                                            <div class="color-swatch" style="background: #FFB500; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                            <span>Luminance</span>
+                                                        </div>
+                                                        <div class="dropdown-option" data-color="#006A8E" data-name="Stratosphere">
+                                                            <div class="color-swatch" style="background: #006A8E; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                            <span>Stratosphere</span>
+                                                        </div>
+                                                        <div class="dropdown-option" data-color="#C4D6A4" data-name="Reindeer Moss">
+                                                            <div class="color-swatch" style="background: #C4D6A4; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                            <span>Reindeer Moss</span>
+                                                        </div>
+                                                        <div class="dropdown-option" data-color="#B8DDE1" data-name="Seafoam">
+                                                            <div class="color-swatch" style="background: #B8DDE1; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                            <span>Seafoam</span>
+                                                        </div>
+                                                        <div class="dropdown-option" data-color="#FDD26E" data-name="Candela">
+                                                            <div class="color-swatch" style="background: #FDD26E; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                            <span>Candela</span>
+                                                        </div>
+                                                        <div class="dropdown-option" data-color="#C6DAE7" data-name="Moondust">
+                                                            <div class="color-swatch" style="background: #C6DAE7; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                            <span>Moondust</span>
+                                                        </div>
+                                                        <div class="dropdown-option" data-color="#AA9D2E" data-name="Hop Bine">
+                                                            <div class="color-swatch" style="background: #AA9D2E; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                            <span>Hop Bine</span>
+                                                        </div>
+                                                        <div class="dropdown-option" data-color="#0D5257" data-name="Rogue Wave">
+                                                            <div class="color-swatch" style="background: #0D5257; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                            <span>Rogue Wave</span>
+                                                        </div>
+                                                        <div class="dropdown-option" data-color="#D3832B" data-name="Solar Flare">
+                                                            <div class="color-swatch" style="background: #D3832B; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                            <span>Solar Flare</span>
+                                                        </div>
+                                                        <div class="dropdown-option" data-color="#003B5C" data-name="Star Canvas">
+                                                            <div class="color-swatch" style="background: #003B5C; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                            <span>Star Canvas</span>
+                                                        </div>
+                                                        <div class="dropdown-option" data-color="#B7A99A" data-name="Till">
+                                                            <div class="color-swatch" style="background: #B7A99A; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                            <span>Till</span>
+                                                        </div>
+                                                        <div class="dropdown-option" data-color="#A7ACA2" data-name="Coastline">
+                                                            <div class="color-swatch" style="background: #A7ACA2; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                            <span>Coastline</span>
+                                                        </div>
+                                                        <div class="dropdown-option" data-color="#7A6855" data-name="High Desert">
+                                                            <div class="color-swatch" style="background: #7A6855; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                            <span>High Desert</span>
+                                                        </div>
+                                                        <div class="dropdown-option" data-color="#8E9089" data-name="Crater">
+                                                            <div class="color-swatch" style="background: #8E9089; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                            <span>Crater</span>
+                                                        </div>
+                                                        <div class="dropdown-option" data-color="custom" data-name="Custom">
+                                                            <div class="color-swatch" style="background: linear-gradient(45deg, #ccc 25%, transparent 25%), linear-gradient(-45deg, #ccc 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #ccc 75%), linear-gradient(-45deg, transparent 75%, #ccc 75%); background-size: 4px 4px; background-position: 0 0, 0 2px, 2px -2px, -2px 0px; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                            <span>Custom Color</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <input type="text" id="pattern-hex-input" class="form-control form-control-sm" placeholder="#ffffff" value="#ffffff" maxlength="7">
+                                            </div>
+                                            <div class="col-2">
+                                                <input type="color" name="pattern_color" value="#ffffff" class="form-control form-control-color">
+                                            </div>
                                         </div>
                                     </div>
-                                    <label class="form-label mb-0 ms-2">Opacity:</label>
-                                    <div class="slider-group" data-default="100">
-                                        <input type="range" name="pattern_opacity" min="0" max="100" 
-                                               value="100" class="form-range w-60px">
-                                        <input type="number" min="0" max="100" value="100" 
-                                               class="form-control form-control-sm w-60px">
-                                        <button type="button" class="reset-btn btn btn-secondary btn-sm px-2 py-0">↺</button>
+                                    <div class="row g-2 align-items-center">
+                                        <div class="col-auto">
+                                            <label class="form-label mb-0">Opacity:</label>
+                                        </div>
+                                        <div class="col">
+                                            <div class="slider-group" data-default="100">
+                                                <input type="range" name="pattern_opacity" min="0" max="100" 
+                                                       value="100" class="form-range w-60px">
+                                                <input type="number" min="0" max="100" value="100" 
+                                                       class="form-control form-control-sm w-60px">
+                                                <button type="button" class="reset-btn btn btn-secondary btn-sm px-2 py-0">↺</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="mb-2">
@@ -982,6 +1313,27 @@
                         <div class="preview-spinner" id="preview-spinner"></div>
                     </div>
                 </div>
+                <!-- Contrast Checker Panel: Inserted directly after preview window -->
+                <div id="contrast-checker-panel" class="section-card mt-3 mb-3" style="max-width: 420px; margin: 0 auto;">
+                    <div class="section-title mb-2" style="font-size: 1rem;">Contrast Checker</div>
+                    <div class="d-flex flex-column" style="gap: 6px;">
+                        <div class="d-flex align-items-center mb-1">
+                          <span style="min-width: 90px; font-size: 11px;">Text Color:</span>
+                          <span id="contrast-text-swatch" style="display:inline-block;width:22px;height:22px;border:1.5px solid #444;border-radius:3px;margin-right:8px;"></span>
+                          <span id="contrast-text-hex" style="font-family:monospace;font-size:13px;"></span>
+                        </div>
+                        <div class="d-flex align-items-center mb-1">
+                          <span style="min-width: 90px; font-size: 11px;">Background: </span>
+                          <span id="contrast-bg-swatch" style="display:inline-block;width:22px;height:22px;border:1.5px solid #444;border-radius:3px;margin-right:8px;"></span>
+                          <span id="contrast-bg-hex" style="font-family:monospace;font-size:13px;"></span>
+                        </div>
+                        <div class="d-flex align-items-center mb-1">
+                          <span style="min-width: 90px; font-size: 11px;">Contrast Ratio:</span>
+                          <span id="contrast-ratio" style="font-weight:bold;font-size:15px;margin-left:8px;"></span>
+                        </div>
+                        <div id="contrast-status" style="font-size:13px;"></div>
+                    </div>
+                </div>
                 
                 <!-- File & Text Settings (moved back under preview) -->
                 <div class="w-100 mb-2">
@@ -1038,77 +1390,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Color palette configuration
-        const colorPalette = {
-            primary: [
-                { value: '#d73f09', label: 'Beaver Orange' },
-                { value: '#000000', label: 'Paddletail Black' },
-                { value: '#FFFFFF', label: 'Bucktooth White' }
-            ],
-            secondary: [
-                { value: '#4A773C', label: 'Pine Stand' },
-                { value: '#00859B', label: 'High Tide' },
-                { value: '#FFB500', label: 'Luminance' },
-                { value: '#006A8E', label: 'Stratosphere' },
-                { value: '#C4D6A4', label: 'Reindeer Moss' },
-                { value: '#B8DDE1', label: 'Seafoam' },
-                { value: '#FDD26E', label: 'Candela' },
-                { value: '#C6DAE7', label: 'Moondust' },
-                { value: '#AA9D2E', label: 'Hop Bine' },
-                { value: '#0D5257', label: 'Rogue Wave' },
-                { value: '#D3832B', label: 'Solar Flare' },
-                { value: '#003B5C', label: 'Star Canvas' },
-                { value: '#B7A99A', label: 'Till' },
-                { value: '#A7ACA2', label: 'Coastline' },
-                { value: '#7A6855', label: 'High Desert' },
-                { value: '#8E9089', label: 'Crater' }
-            ]
-        };
-
-        function generateColorPaletteHTML(selectedValue = null) {
-            let html = `
-                <div class="custom-color-section">
-                    <div class="color-option" data-value="custom">
-                        <div class="color-option-swatch" 
-                             style="background: linear-gradient(45deg, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff);"></div>
-                        <span class="color-option-label">Custom Color</span>
-                    </div>
-                    <input type="color" class="custom-color-picker" style="display: none;">
-                </div>
-            `;
-            
-            // Primary colors
-            colorPalette.primary.forEach(color => {
-                const isSelected = selectedValue === color.value ? 'selected' : '';
-                html += `
-                    <div class="color-option ${isSelected}" data-value="${color.value}">
-                        <div class="color-option-swatch" style="background: ${color.value};"></div>
-                        <span class="color-option-label">${color.label}</span>
-                    </div>
-                `;
-            });
-            
-            // Secondary colors
-            colorPalette.secondary.forEach(color => {
-                const isSelected = selectedValue === color.value ? 'selected' : '';
-                html += `
-                    <div class="color-option ${isSelected}" data-value="${color.value}">
-                        <div class="color-option-swatch" style="background: ${color.value};"></div>
-                        <span class="color-option-label">${color.label}</span>
-                    </div>
-                `;
-            });
-            
-            return html;
-        }
-
-        // Function to replace color picker content
-        function replaceColorPickerContent() {
-            document.querySelectorAll('.color-dropdown-menu').forEach(menu => {
-                const selectedValue = menu.closest('.color-picker-dropdown').querySelector('input[type="color"]').value;
-                menu.innerHTML = generateColorPaletteHTML(selectedValue);
-            });
-        }
         function setupToggleControl(checkboxId, controlsId, selectName) {
             const checkbox = document.getElementById(checkboxId);
             const controls = document.getElementById(controlsId);
@@ -1128,8 +1409,6 @@
                 });
             }
         }
-
-
 
         function setupToggleControls() {
             // Background Image Toggle (with auto-selection)
@@ -1178,257 +1457,6 @@
             setupToggleControl('text_stroke_enabled', 'stroke_controls', null);
             setupToggleControl('text_box_enabled', 'background_box_controls', null);
         }
-        // Color picker dropdown functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            setupColorPickers();
-            setupXYSlider();
-            setupAllSliders();
-            setupAllInputs();
-            setupDraggableText();
-            
-            function setupColorPickers() {
-                document.querySelectorAll('.color-picker-dropdown').forEach(dropdown => {
-                    const display = dropdown.querySelector('.color-display');
-                    const menu = dropdown.querySelector('.color-dropdown-menu');
-                    const hiddenInput = dropdown.querySelector('input[type="color"]');
-                    let customPicker = dropdown.querySelector('.custom-color-picker');
-                    if (!customPicker) {
-                        customPicker = document.createElement('input');
-                        customPicker.type = 'color';
-                        customPicker.className = 'custom-color-picker';
-                        customPicker.style.display = 'none';
-                        dropdown.appendChild(customPicker);
-                    }
-                    
-                    // Toggle dropdown
-                    display.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        
-                        // Close other dropdowns
-                        document.querySelectorAll('.color-dropdown-menu.show').forEach(otherMenu => {
-                            if (otherMenu !== menu) {
-                                otherMenu.classList.remove('show');
-                            }
-                        });
-                        
-                        // Calculate position for fixed dropdown
-                        const rect = display.getBoundingClientRect();
-                        const dropdown = menu;
-                        
-                        // Position dropdown below the color display
-                        dropdown.style.top = (rect.bottom + 2) + 'px';
-                        dropdown.style.left = rect.left + 'px';
-                        
-                        // Check if dropdown would go off the right edge
-                        const dropdownWidth = 200; // max-width from CSS
-                        const windowWidth = window.innerWidth;
-                        if (rect.left + dropdownWidth > windowWidth) {
-                            dropdown.style.left = (windowWidth - dropdownWidth - 10) + 'px';
-                        }
-                        
-                        // Check if dropdown would go off the bottom edge
-                        const maxDropdownHeight = 300; // max-height from CSS
-                        const windowHeight = window.innerHeight;
-                        const availableSpaceBelow = windowHeight - rect.bottom - 10;
-                        const availableSpaceAbove = rect.top - 10;
-                        
-                        if (availableSpaceBelow < 150 && availableSpaceAbove > availableSpaceBelow) {
-                            // Position above the color display if there's more space above
-                            dropdown.style.top = (rect.top - Math.min(maxDropdownHeight, availableSpaceAbove) - 2) + 'px';
-                        } else if (availableSpaceBelow < 150) {
-                            // Position below but limit height to available space
-                            dropdown.style.maxHeight = availableSpaceBelow + 'px';
-                        }
-                        
-                        menu.classList.toggle('show');
-                    });
-                    
-                    // Handle color option clicks
-                    menu.addEventListener('click', function(e) {
-                        const option = e.target.closest('.color-option');
-                        if (!option) return;
-                        
-                        const value = option.getAttribute('data-value');
-                        
-                        if (value === 'custom') {
-                            // Show custom color picker container
-                            const customContainer = document.getElementById('custom-color-picker-container');
-                            const customInput = document.getElementById('custom-color-input');
-                            const menuRect = menu.getBoundingClientRect();
-                            
-                            // Position the custom color picker above the dropdown menu
-                            customContainer.style.top = (menuRect.top - 80) + 'px';
-                            customContainer.style.left = (menuRect.left + 10) + 'px';
-                            customContainer.classList.add('show');
-                            
-                            // Set current color as default
-                            customInput.value = hiddenInput.value;
-                            
-                            // Store reference to current dropdown for confirmation
-                            customContainer.dataset.currentDropdown = dropdown.dataset.id || 'default';
-                            return;
-                        }
-                        
-                        // Update selection
-                        menu.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('selected'));
-                        option.classList.add('selected');
-                        
-                        // Update display and hidden input
-                        display.style.setProperty('--selected-color', value);
-                        hiddenInput.value = value;
-                        
-                        // Trigger change event
-                        hiddenInput.dispatchEvent(new Event('input', { bubbles: true }));
-                        
-                        // Close dropdown
-                        menu.classList.remove('show');
-                    });
-                    
-
-                });
-                
-                // Function to calculate relative luminance for accessibility
-                function getRelativeLuminance(hexColor) {
-                    const r = parseInt(hexColor.slice(1, 3), 16) / 255;
-                    const g = parseInt(hexColor.slice(3, 5), 16) / 255;
-                    const b = parseInt(hexColor.slice(5, 7), 16) / 255;
-                    
-                    const rsRGB = r <= 0.03928 ? r / 12.92 : Math.pow((r + 0.055) / 1.055, 2.4);
-                    const gsRGB = g <= 0.03928 ? g / 12.92 : Math.pow((g + 0.055) / 1.055, 2.4);
-                    const bsRGB = b <= 0.03928 ? b / 12.92 : Math.pow((b + 0.055) / 1.055, 2.4);
-                    
-                    return 0.2126 * rsRGB + 0.7152 * gsRGB + 0.0722 * bsRGB;
-                }
-                
-                // Function to update label color based on background for accessibility
-                function updateLabelColor(colorInput, label) {
-                    const color = colorInput.value;
-                    const luminance = getRelativeLuminance(color);
-                    
-                    // Use black text with white outline for light backgrounds
-                    // Use white text with black outline for dark backgrounds
-                    if (luminance > 0.5) {
-                        label.style.color = '#000000';
-                        label.style.textShadow = `
-                            -1px -1px 0 #fff,
-                            -1px 1px 0 #fff,
-                            1px -1px 0 #fff,
-                            1px 1px 0 #fff,
-                            0px -1px 0 #fff,
-                            0px 1px 0 #fff,
-                            -1px 0px 0 #fff,
-                            1px 0px 0 #fff
-                        `;
-                    } else {
-                        label.style.color = '#ffffff';
-                        label.style.textShadow = `
-                            -1px -1px 0 #000,
-                            -1px 1px 0 #000,
-                            1px -1px 0 #000,
-                            1px 1px 0 #000,
-                            0px -1px 0 #000,
-                            0px 1px 0 #000,
-                            -1px 0px 0 #000,
-                            1px 0px 0 #000
-                        `;
-                    }
-                }
-                
-                // Setup custom color picker container
-                const customContainer = document.getElementById('custom-color-picker-container');
-                const customInput = document.getElementById('custom-color-input');
-                const cancelBtn = customContainer.querySelector('.cancel-btn');
-                const confirmBtn = customContainer.querySelector('.confirm-btn');
-                const clickHereLabel = customContainer.querySelector('.click-here-label');
-                
-                // Cancel button
-                cancelBtn.addEventListener('click', function() {
-                    customContainer.classList.remove('show');
-                });
-                
-                // Update label color when custom color input changes
-                customInput.addEventListener('input', function() {
-                    updateLabelColor(customInput, clickHereLabel);
-                    // Always show hex code in the label
-                    clickHereLabel.textContent = customInput.value.toUpperCase();
-                    // Update the dummy box background color
-                    const dummyColorInput = customContainer.querySelector('.dummy-color-input');
-                    dummyColorInput.style.background = customInput.value;
-                });
-                
-                // When opening the custom color picker, set label to hex
-                customInput.addEventListener('focus', function() {
-                    clickHereLabel.textContent = customInput.value.toUpperCase();
-                });
-                
-                // Make the dummy color input clickable to trigger the real color input
-                const dummyColorInput = customContainer.querySelector('.dummy-color-input');
-                dummyColorInput.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    customInput.click();
-                });
-                
-
-                
-                // Confirm button
-                confirmBtn.addEventListener('click', function() {
-                    const customColor = customInput.value;
-                    const dropdownId = customContainer.dataset.currentDropdown;
-                    
-                    // Find the dropdown that opened the custom picker
-                    const dropdown = document.querySelector(`[data-id="${dropdownId}"]`) || 
-                                   document.querySelector('.color-picker-dropdown');
-                    
-                    if (dropdown) {
-                        const display = dropdown.querySelector('.color-display');
-                        const hiddenInput = dropdown.querySelector('input[type="color"]');
-                        const menu = dropdown.querySelector('.color-dropdown-menu');
-                        
-                        // Clear selection from preset options
-                        menu.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('selected'));
-                        
-                        // Update display and hidden input
-                        display.style.setProperty('--selected-color', customColor);
-                        hiddenInput.value = customColor;
-                        
-                        // Trigger change event
-                        hiddenInput.dispatchEvent(new Event('input', { bubbles: true }));
-                        
-                        // Close dropdown and custom picker
-                        menu.classList.remove('show');
-                        customContainer.classList.remove('show');
-                    }
-                });
-                
-                // Close custom picker when clicking outside
-                document.addEventListener('click', function(e) {
-                    if (!e.target.closest('.custom-color-picker-container') && 
-                        !e.target.closest('.color-picker-dropdown')) {
-                        customContainer.classList.remove('show');
-                    }
-                });
-                
-                // Close dropdowns when clicking outside
-                document.addEventListener('click', function(e) {
-                    // Don't close if clicking inside a color picker dropdown
-                    if (e.target.closest('.color-picker-dropdown')) {
-                        return;
-                    }
-                    
-                    document.querySelectorAll('.color-dropdown-menu.show').forEach(menu => {
-                        menu.classList.remove('show');
-                    });
-                });
-                
-                // Close dropdowns on window resize
-                window.addEventListener('resize', function() {
-                    document.querySelectorAll('.color-dropdown-menu.show').forEach(menu => {
-                        menu.classList.remove('show');
-                    });
-                });
-            }
-        });
 
         // Utility functions
         function clamp(val, min, max) { 
@@ -1546,7 +1574,7 @@
                         scheduleUpdate(50);
                     });
                 }
-                        });
+            });
         }
 
         // Universal input event listeners
@@ -1831,7 +1859,7 @@
                 btn.textContent = batchMode && batchMode.checked ? 'Generating...' : 'Downloading...';
                 btn.disabled = true;
 
-                                const formData = new FormData(document.getElementById('settings-form'));
+                const formData = new FormData(document.getElementById('settings-form'));
                 
                 // Add batch parameters manually since they're outside the form
                 const filenameBase = document.getElementById('filename_base');
@@ -1884,17 +1912,70 @@
             }
         }
 
+        // Contrast checker logic (WebAIM/WCAG)
+        function hexToRgb(hex) {
+            hex = hex.replace('#', '');
+            if (hex.length === 3) {
+                hex = hex.split('').map(x => x + x).join('');
+            }
+            const num = parseInt(hex, 16);
+            return [
+                (num >> 16) & 255,
+                (num >> 8) & 255,
+                num & 255
+            ];
+        }
+
+        function luminance([r, g, b]) {
+            const a = [r, g, b].map(function (v) {
+                v /= 255;
+                return v <= 0.03928
+                    ? v / 12.92
+                    : Math.pow((v + 0.055) / 1.055, 2.4);
+            });
+            return 0.2126 * a[0] + 0.7152 * a[1] + 0.0722 * a[2];
+        }
+
+        function contrastRatio(hex1, hex2) {
+            const lum1 = luminance(hexToRgb(hex1));
+            const lum2 = luminance(hexToRgb(hex2));
+            const brightest = Math.max(lum1, lum2);
+            const darkest = Math.min(lum1, lum2);
+            return ((brightest + 0.05) / (darkest + 0.05));
+        }
+
+        function updateContrastChecker() {
+            const textHex = document.querySelector('input[name="text_color"]').value || '#ffffff';
+            const bgHex = document.querySelector('input[name="background_color"]').value || '#23272b';
+            
+            // Update swatches and hex
+            document.getElementById('contrast-text-swatch').style.background = textHex;
+            document.getElementById('contrast-text-hex').textContent = textHex.toUpperCase();
+            document.getElementById('contrast-bg-swatch').style.background = bgHex;
+            document.getElementById('contrast-bg-hex').textContent = bgHex.toUpperCase();
+            
+            // Calculate ratio
+            let ratio = contrastRatio(textHex, bgHex);
+            let ratioStr = ratio.toFixed(2) + ':1';
+            document.getElementById('contrast-ratio').textContent = ratioStr;
+            
+            // WCAG pass/fail
+            let status = '';
+            // Normal text
+            status += `<span>Normal Text: <b style="color:${ratio >= 4.5 ? '#4A773C' : '#D73F09'}">${ratio >= 4.5 ? 'AA Pass' : 'AA Fail'}</b> / <b style="color:${ratio >= 7 ? '#4A773C' : '#D73F09'}">${ratio >= 7 ? 'AAA Pass' : 'AAA Fail'}</b></span><br>`;
+            // Large text
+            status += `<span>Large Text: <b style="color:${ratio >= 3 ? '#4A773C' : '#D73F09'}">${ratio >= 3 ? 'AA Pass' : 'AA Fail'}</b> / <b style="color:${ratio >= 4.5 ? '#4A773C' : '#D73F09'}">${ratio >= 4.5 ? 'AAA Pass' : 'AAA Fail'}</b></span><br>`;
+            // UI components/graphics
+            status += `<span>UI/Graphics: <b style="color:${ratio >= 3 ? '#4A773C' : '#D73F09'}">${ratio >= 3 ? 'AA Pass' : 'AA Fail'}</b></span>`;
+            document.getElementById('contrast-status').innerHTML = status;
+        }
+
         // Initialize everything when DOM is ready
         document.addEventListener('DOMContentLoaded', function() {
-            // Set default colors
-            const textColorInputs = document.querySelectorAll('input[name="text_color"]');
-            textColorInputs.forEach(input => input.value = '#ffffff');
-            
-            const bgColorInputs = document.querySelectorAll('input[name="background_color"]');
-            bgColorInputs.forEach(input => input.value = '#d73f09');
-            
-            // Populate all color palettes
-            replaceColorPickerContent();
+            setupXYSlider();
+            setupAllSliders();
+            setupAllInputs();
+            setupDraggableText();
             
             // Setup show/hide functionality for background and pattern controls
             setupToggleControls();
@@ -1958,9 +2039,497 @@
             // Button events
             if (downloadBtn) downloadBtn.addEventListener('click', downloadThumbnail);
 
+            // Update contrast checker on color changes
+            const textColorInput = document.querySelector('input[name="text_color"]');
+            const bgColorInput = document.querySelector('input[name="background_color"]');
+            if (textColorInput) textColorInput.addEventListener('input', updateContrastChecker);
+            if (bgColorInput) bgColorInput.addEventListener('input', updateContrastChecker);
+
+            // Setup comprehensive color selection system for text color
+            const textBrandedDropdownHeader = document.getElementById('text-branded-dropdown-header');
+            const textBrandedOptions = document.getElementById('text-branded-options');
+            const textBrandedText = document.getElementById('text-branded-text');
+            const textHexInput = document.getElementById('text-hex-input');
+            
+            // Brand color mapping for reverse lookup
+            const brandColors = {
+                '#FFFFFF': 'Bucktooth White',
+                '#000000': 'Paddletail Black', 
+                '#D73F09': 'Beaver Orange',
+                '#4A773C': 'Pine Stand',
+                '#00859B': 'High Tide',
+                '#FFB500': 'Luminance',
+                '#006A8E': 'Stratosphere',
+                '#C4D6A4': 'Reindeer Moss',
+                '#B8DDE1': 'Seafoam',
+                '#FDD26E': 'Candela',
+                '#C6DAE7': 'Moondust',
+                '#AA9D2E': 'Hop Bine',
+                '#0D5257': 'Rogue Wave',
+                '#D3832B': 'Solar Flare',
+                '#003B5C': 'Star Canvas',
+                '#B7A99A': 'Till',
+                '#A7ACA2': 'Coastline',
+                '#7A6855': 'High Desert',
+                '#8E9089': 'Crater'
+            };
+
+            function updateTextColorFromSource(source, color) {
+                if (!color) return;
+                
+                // Normalize color to uppercase
+                color = color.toUpperCase();
+                
+                // Update color picker
+                if (textColorInput) {
+                    textColorInput.value = color;
+                    textColorInput.dispatchEvent(new Event('input', { bubbles: true }));
+                }
+                
+                // Update hex input
+                if (textHexInput && source !== 'hex') {
+                    textHexInput.value = color;
+                }
+                
+                // Update custom dropdown
+                if (source !== 'dropdown') {
+                    const brandName = brandColors[color];
+                    if (brandName) {
+                        // Find and select the matching branded color
+                        const option = textBrandedOptions.querySelector(`[data-color="${color}"]`);
+                        if (option) {
+                            textBrandedText.textContent = brandName;
+                            // Update selected state
+                            textBrandedOptions.querySelectorAll('.dropdown-option').forEach(opt => opt.classList.remove('selected'));
+                            option.classList.add('selected');
+                        }
+                    } else {
+                        // Set to custom if not a branded color
+                        textBrandedText.textContent = 'Custom';
+                        // Update selected state
+                        textBrandedOptions.querySelectorAll('.dropdown-option').forEach(opt => opt.classList.remove('selected'));
+                        textBrandedOptions.querySelector('[data-color="custom"]').classList.add('selected');
+                    }
+                }
+                
+                updateContrastChecker();
+            }
+
+            // Custom dropdown toggle
+            if (textBrandedDropdownHeader) {
+                textBrandedDropdownHeader.addEventListener('click', function() {
+                    const isOpen = textBrandedOptions.style.display === 'block';
+                    if (isOpen) {
+                        textBrandedOptions.style.display = 'none';
+                        this.classList.remove('active');
+                    } else {
+                        // Position the dropdown
+                        const rect = this.getBoundingClientRect();
+                        textBrandedOptions.style.left = rect.left + 'px';
+                        textBrandedOptions.style.top = (rect.bottom + 2) + 'px';
+                        textBrandedOptions.style.display = 'block';
+                        this.classList.add('active');
+                    }
+                });
+            }
+
+            // Custom dropdown option selection
+            if (textBrandedOptions) {
+                textBrandedOptions.addEventListener('click', function(e) {
+                    const option = e.target.closest('.dropdown-option');
+                    if (option) {
+                        const color = option.dataset.color;
+                        if (color && color !== 'custom') {
+                            updateTextColorFromSource('dropdown', color);
+                        }
+                        // Close dropdown
+                        textBrandedOptions.style.display = 'none';
+                        textBrandedDropdownHeader.classList.remove('active');
+                    }
+                });
+            }
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.custom-dropdown')) {
+                    textBrandedOptions.style.display = 'none';
+                    textBrandedDropdownHeader.classList.remove('active');
+                }
+            });
+
+            // Hex input change handler
+            if (textHexInput) {
+                textHexInput.addEventListener('input', function() {
+                    let color = this.value.trim();
+                    if (color && !color.startsWith('#')) {
+                        color = '#' + color;
+                    }
+                    if (color && /^#[0-9A-F]{6}$/i.test(color)) {
+                        updateTextColorFromSource('hex', color);
+                    }
+                });
+                
+                textHexInput.addEventListener('blur', function() {
+                    let color = this.value.trim();
+                    if (color && !color.startsWith('#')) {
+                        color = '#' + color;
+                        this.value = color;
+                    }
+                    if (color && /^#[0-9A-F]{6}$/i.test(color)) {
+                        updateTextColorFromSource('hex', color);
+                    }
+                });
+            }
+
+            // Color picker change handler
+            if (textColorInput) {
+                textColorInput.addEventListener('input', function() {
+                    updateTextColorFromSource('picker', this.value);
+                });
+            }
+
+            // Setup comprehensive color selection system for background color
+            const bgBrandedDropdownHeader = document.getElementById('bg-branded-dropdown-header');
+            const bgBrandedOptions = document.getElementById('bg-branded-options');
+            const bgBrandedText = document.getElementById('bg-branded-text');
+            const bgHexInput = document.getElementById('bg-hex-input');
+
+            function updateBgColorFromSource(source, color) {
+                if (!color) return;
+                
+                // Normalize color to uppercase
+                color = color.toUpperCase();
+                
+                // Update color picker
+                if (bgColorInput) {
+                    bgColorInput.value = color;
+                    bgColorInput.dispatchEvent(new Event('input', { bubbles: true }));
+                }
+                
+                // Update hex input
+                if (bgHexInput && source !== 'hex') {
+                    bgHexInput.value = color;
+                }
+                
+                // Update custom dropdown
+                if (source !== 'dropdown') {
+                    const brandName = brandColors[color];
+                    if (brandName) {
+                        // Find and select the matching branded color
+                        const option = bgBrandedOptions.querySelector(`[data-color="${color}"]`);
+                        if (option) {
+                            bgBrandedText.textContent = brandName;
+                            // Update selected state
+                            bgBrandedOptions.querySelectorAll('.dropdown-option').forEach(opt => opt.classList.remove('selected'));
+                            option.classList.add('selected');
+                        }
+                    } else {
+                        // Set to custom if not a branded color
+                        bgBrandedText.textContent = 'Custom';
+                        // Update selected state
+                        bgBrandedOptions.querySelectorAll('.dropdown-option').forEach(opt => opt.classList.remove('selected'));
+                        bgBrandedOptions.querySelector('[data-color="custom"]').classList.add('selected');
+                    }
+                }
+                
+                updateContrastChecker();
+            }
+
+            // Background dropdown toggle
+            if (bgBrandedDropdownHeader) {
+                bgBrandedDropdownHeader.addEventListener('click', function() {
+                    const isOpen = bgBrandedOptions.style.display === 'block';
+                    if (isOpen) {
+                        bgBrandedOptions.style.display = 'none';
+                        this.classList.remove('active');
+                    } else {
+                        // Position the dropdown
+                        const rect = this.getBoundingClientRect();
+                        bgBrandedOptions.style.left = rect.left + 'px';
+                        bgBrandedOptions.style.top = (rect.bottom + 2) + 'px';
+                        bgBrandedOptions.style.display = 'block';
+                        this.classList.add('active');
+                    }
+                });
+            }
+
+            // Background dropdown option selection
+            if (bgBrandedOptions) {
+                bgBrandedOptions.addEventListener('click', function(e) {
+                    const option = e.target.closest('.dropdown-option');
+                    if (option) {
+                        const color = option.dataset.color;
+                        if (color && color !== 'custom') {
+                            updateBgColorFromSource('dropdown', color);
+                        }
+                        // Close dropdown
+                        bgBrandedOptions.style.display = 'none';
+                        bgBrandedDropdownHeader.classList.remove('active');
+                    }
+                });
+            }
+
+            // Background hex input change handler
+            if (bgHexInput) {
+                bgHexInput.addEventListener('input', function() {
+                    let color = this.value.trim();
+                    if (color && !color.startsWith('#')) {
+                        color = '#' + color;
+                    }
+                    if (color && /^#[0-9A-F]{6}$/i.test(color)) {
+                        updateBgColorFromSource('hex', color);
+                    }
+                });
+                
+                bgHexInput.addEventListener('blur', function() {
+                    let color = this.value.trim();
+                    if (color && !color.startsWith('#')) {
+                        color = '#' + color;
+                        this.value = color;
+                    }
+                    if (color && /^#[0-9A-F]{6}$/i.test(color)) {
+                        updateBgColorFromSource('hex', color);
+                    }
+                });
+            }
+
+            // Background color picker change handler
+            if (bgColorInput) {
+                bgColorInput.addEventListener('input', function() {
+                    updateBgColorFromSource('picker', this.value);
+                });
+            }
+
+            // Setup comprehensive color selection system for stroke color
+            const strokeBrandedDropdownHeader = document.getElementById('stroke-branded-dropdown-header');
+            const strokeBrandedOptions = document.getElementById('stroke-branded-options');
+            const strokeBrandedText = document.getElementById('stroke-branded-text');
+            const strokeHexInput = document.getElementById('stroke-hex-input');
+            const strokeColorInput = document.querySelector('input[name="text_stroke_color"]');
+
+            function updateStrokeColorFromSource(source, color) {
+                if (!color) return;
+                
+                // Normalize color to uppercase
+                color = color.toUpperCase();
+                
+                // Update color picker
+                if (strokeColorInput) {
+                    strokeColorInput.value = color;
+                    strokeColorInput.dispatchEvent(new Event('input', { bubbles: true }));
+                }
+                
+                // Update hex input
+                if (strokeHexInput && source !== 'hex') {
+                    strokeHexInput.value = color;
+                }
+                
+                // Update custom dropdown
+                if (source !== 'dropdown') {
+                    const brandName = brandColors[color];
+                    if (brandName) {
+                        // Find and select the matching branded color
+                        const option = strokeBrandedOptions.querySelector(`[data-color="${color}"]`);
+                        if (option) {
+                            strokeBrandedText.textContent = brandName;
+                            // Update selected state
+                            strokeBrandedOptions.querySelectorAll('.dropdown-option').forEach(opt => opt.classList.remove('selected'));
+                            option.classList.add('selected');
+                        }
+                    } else {
+                        // Set to custom if not a branded color
+                        strokeBrandedText.textContent = 'Custom';
+                        // Update selected state
+                        strokeBrandedOptions.querySelectorAll('.dropdown-option').forEach(opt => opt.classList.remove('selected'));
+                        strokeBrandedOptions.querySelector('[data-color="custom"]').classList.add('selected');
+                    }
+                }
+                
+                updateContrastChecker();
+            }
+
+            // Stroke dropdown toggle
+            if (strokeBrandedDropdownHeader) {
+                strokeBrandedDropdownHeader.addEventListener('click', function() {
+                    const isOpen = strokeBrandedOptions.style.display === 'block';
+                    if (isOpen) {
+                        strokeBrandedOptions.style.display = 'none';
+                        this.classList.remove('active');
+                    } else {
+                        // Position the dropdown
+                        const rect = this.getBoundingClientRect();
+                        strokeBrandedOptions.style.left = rect.left + 'px';
+                        strokeBrandedOptions.style.top = (rect.bottom + 2) + 'px';
+                        strokeBrandedOptions.style.display = 'block';
+                        this.classList.add('active');
+                    }
+                });
+            }
+
+            // Stroke dropdown option selection
+            if (strokeBrandedOptions) {
+                strokeBrandedOptions.addEventListener('click', function(e) {
+                    const option = e.target.closest('.dropdown-option');
+                    if (option) {
+                        const color = option.dataset.color;
+                        if (color && color !== 'custom') {
+                            updateStrokeColorFromSource('dropdown', color);
+                        }
+                        // Close dropdown
+                        strokeBrandedOptions.style.display = 'none';
+                        strokeBrandedDropdownHeader.classList.remove('active');
+                    }
+                });
+            }
+
+            // Stroke hex input change handler
+            if (strokeHexInput) {
+                strokeHexInput.addEventListener('input', function() {
+                    let color = this.value.trim();
+                    if (color && !color.startsWith('#')) {
+                        color = '#' + color;
+                    }
+                    if (color && /^#[0-9A-F]{6}$/i.test(color)) {
+                        updateStrokeColorFromSource('hex', color);
+                    }
+                });
+                
+                strokeHexInput.addEventListener('blur', function() {
+                    let color = this.value.trim();
+                    if (color && !color.startsWith('#')) {
+                        color = '#' + color;
+                        this.value = color;
+                    }
+                    if (color && /^#[0-9A-F]{6}$/i.test(color)) {
+                        updateStrokeColorFromSource('hex', color);
+                    }
+                });
+            }
+
+            // Stroke color picker change handler
+            if (strokeColorInput) {
+                strokeColorInput.addEventListener('input', function() {
+                    updateStrokeColorFromSource('picker', this.value);
+                });
+            }
+
+            // Setup comprehensive color selection system for box color
+            const boxBrandedDropdownHeader = document.getElementById('box-branded-dropdown-header');
+            const boxBrandedOptions = document.getElementById('box-branded-options');
+            const boxBrandedText = document.getElementById('box-branded-text');
+            const boxHexInput = document.getElementById('box-hex-input');
+            const boxColorInput = document.querySelector('input[name="text_box_color"]');
+
+            function updateBoxColorFromSource(source, color) {
+                if (!color) return;
+                
+                // Normalize color to uppercase
+                color = color.toUpperCase();
+                
+                // Update color picker
+                if (boxColorInput) {
+                    boxColorInput.value = color;
+                    boxColorInput.dispatchEvent(new Event('input', { bubbles: true }));
+                }
+                
+                // Update hex input
+                if (boxHexInput && source !== 'hex') {
+                    boxHexInput.value = color;
+                }
+                
+                // Update custom dropdown
+                if (source !== 'dropdown') {
+                    const brandName = brandColors[color];
+                    if (brandName) {
+                        // Find and select the matching branded color
+                        const option = boxBrandedOptions.querySelector(`[data-color="${color}"]`);
+                        if (option) {
+                            boxBrandedText.textContent = brandName;
+                            // Update selected state
+                            boxBrandedOptions.querySelectorAll('.dropdown-option').forEach(opt => opt.classList.remove('selected'));
+                            option.classList.add('selected');
+                        }
+                    } else {
+                        // Set to custom if not a branded color
+                        boxBrandedText.textContent = 'Custom';
+                        // Update selected state
+                        boxBrandedOptions.querySelectorAll('.dropdown-option').forEach(opt => opt.classList.remove('selected'));
+                        boxBrandedOptions.querySelector('[data-color="custom"]').classList.add('selected');
+                    }
+                }
+                
+                updateContrastChecker();
+            }
+
+            // Box dropdown toggle
+            if (boxBrandedDropdownHeader) {
+                boxBrandedDropdownHeader.addEventListener('click', function() {
+                    const isOpen = boxBrandedOptions.style.display === 'block';
+                    if (isOpen) {
+                        boxBrandedOptions.style.display = 'none';
+                        this.classList.remove('active');
+                    } else {
+                        // Position the dropdown
+                        const rect = this.getBoundingClientRect();
+                        boxBrandedOptions.style.left = rect.left + 'px';
+                        boxBrandedOptions.style.top = (rect.bottom + 2) + 'px';
+                        boxBrandedOptions.style.display = 'block';
+                        this.classList.add('active');
+                    }
+                });
+            }
+
+            // Box dropdown option selection
+            if (boxBrandedOptions) {
+                boxBrandedOptions.addEventListener('click', function(e) {
+                    const option = e.target.closest('.dropdown-option');
+                    if (option) {
+                        const color = option.dataset.color;
+                        if (color && color !== 'custom') {
+                            updateBoxColorFromSource('dropdown', color);
+                        }
+                        // Close dropdown
+                        boxBrandedOptions.style.display = 'none';
+                        boxBrandedDropdownHeader.classList.remove('active');
+                    }
+                });
+            }
+
+            // Box hex input change handler
+            if (boxHexInput) {
+                boxHexInput.addEventListener('input', function() {
+                    let color = this.value.trim();
+                    if (color && !color.startsWith('#')) {
+                        color = '#' + color;
+                    }
+                    if (color && /^#[0-9A-F]{6}$/i.test(color)) {
+                        updateBoxColorFromSource('hex', color);
+                    }
+                });
+                
+                boxHexInput.addEventListener('blur', function() {
+                    let color = this.value.trim();
+                    if (color && !color.startsWith('#')) {
+                        color = '#' + color;
+                        this.value = color;
+                    }
+                    if (color && /^#[0-9A-F]{6}$/i.test(color)) {
+                        updateBoxColorFromSource('hex', color);
+                    }
+                });
+            }
+
+            // Box color picker change handler
+            if (boxColorInput) {
+                boxColorInput.addEventListener('input', function() {
+                    updateBoxColorFromSource('picker', this.value);
+                });
+            }
+
             // Initial updates
             scheduleUpdate(0);
             updateFilenames();
+            updateContrastChecker();
         });
 
         // --- Undo/Redo and Reset All Implementation ---
@@ -1968,6 +2537,7 @@
         const resetAllBtn = document.getElementById('reset-all-btn');
         let undoStack = [];
         let isRestoring = false;
+
         // Store default values for reset
         const defaultValues = {};
         if (form) {
@@ -1981,6 +2551,7 @@
                 }
             });
         }
+
         function getFormSnapshot() {
             const snapshot = {};
             Array.from(form.elements).forEach(el => {
@@ -1994,6 +2565,7 @@
             });
             return snapshot;
         }
+
         function setFormSnapshot(snapshot) {
             isRestoring = true;
             Array.from(form.elements).forEach(el => {
@@ -2009,6 +2581,7 @@
             });
             isRestoring = false;
         }
+
         // Save snapshot on every change
         if (form) {
             form.addEventListener('input', function(e) {
@@ -2024,6 +2597,7 @@
                 }
             }, true);
         }
+
         // Undo with Ctrl+Z or Cmd+Z
         document.addEventListener('keydown', function(e) {
             if ((e.ctrlKey || e.metaKey) && e.key === 'z' && undoStack.length > 0) {
@@ -2032,6 +2606,7 @@
                 if (last) setFormSnapshot(last);
             }
         });
+
         // Reset All button
         if (resetAllBtn) {
             resetAllBtn.addEventListener('click', function() {
@@ -2039,20 +2614,6 @@
                 undoStack = [];
             });
         }
-        // ... existing code ...
     </script>
-    
-    <!-- Custom Color Picker Container -->
-    <div class="custom-color-picker-container" id="custom-color-picker-container">
-        <div class="color-input-wrapper">
-            <div class="dummy-color-input"></div>
-            <input type="color" id="custom-color-input" value="#ffffff">
-            <div class="click-here-label">Click here</div>
-        </div>
-        <div class="picker-buttons">
-            <button type="button" class="cancel-btn">Cancel</button>
-            <button type="button" class="confirm-btn confirm">Confirm</button>
-        </div>
-    </div>
 </body>
 </html>
