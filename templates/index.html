@@ -1725,15 +1725,32 @@
 
                 // Draw to hidden canvas for pixel sampling
                 const canvas = document.getElementById('preview-canvas');
-                const ctx = canvas.getContext('2d', { willReadFrequently: true });
-                const img = new window.Image();
-                img.onload = function() {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                    // After drawing, update the contrast checker with sampled color
-                    updateContrastCheckerWithSampledBg();
-                };
-                img.src = data.image;
+                if (canvas) {
+                    const ctx = canvas.getContext('2d', { willReadFrequently: true });
+                    const img = new window.Image();
+                    img.crossOrigin = 'anonymous'; // Handle CORS issues
+                    img.onload = function() {
+                        try {
+                            ctx.clearRect(0, 0, canvas.width, canvas.height);
+                            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                            // After drawing, update the contrast checker with sampled color
+                            updateContrastCheckerWithSampledBg();
+                        } catch (error) {
+                            console.warn('Error drawing image to canvas:', error);
+                            // Fallback to basic contrast checker
+                            updateContrastChecker();
+                        }
+                    };
+                    img.onerror = function() {
+                        console.warn('Error loading image for contrast checker');
+                        // Fallback to basic contrast checker
+                        updateContrastChecker();
+                    };
+                    img.src = data.image;
+                } else {
+                    // Fallback to basic contrast checker if canvas not available
+                    updateContrastChecker();
+                }
 
                 // Sync draggable overlay
                 setTimeout(() => {
@@ -1816,11 +1833,7 @@
                 if (batchCount) formData.set('batch_count', batchCount.value);
                 if (batchModeCheckbox) formData.set('batch_mode', batchModeCheckbox.checked ? 'on' : 'off');
                 
-                // Debug: log what's being sent
-                console.log('Batch mode:', batchModeCheckbox?.checked);
-                console.log('Start number:', startNumber?.value);
-                console.log('Batch count:', batchCount?.value);
-                console.log('Filename base:', filenameBase?.value);
+                
 
                 const endpoint = batchMode && batchMode.checked ? '/generate' : '/individual';
                 const response = await fetch(endpoint, {
@@ -1916,7 +1929,16 @@
 
         function updateContrastCheckerWithSampledBg() {
             const canvas = document.getElementById('preview-canvas');
+            if (!canvas) {
+                console.warn('Preview canvas not found');
+                return;
+            }
+            
             const ctx = canvas.getContext('2d', { willReadFrequently: true });
+            if (!ctx) {
+                console.warn('Could not get canvas context');
+                return;
+            }
 
             // Get text and font settings from form
             const text = document.getElementById('text').value;
@@ -1964,25 +1986,36 @@
             const textHex = document.querySelector('input[name="text_color"]').value || '#ffffff';
             
             for (const point of samplePoints) {
-                const pixelData = ctx.getImageData(point.x, point.y, 1, 1);
-                const bgR = pixelData.data[0];
-                const bgG = pixelData.data[1];
-                const bgB = pixelData.data[2];
-                
-                // Skip white pixels (text) - only sample background colors
-                if (bgR > 240 && bgG > 240 && bgB > 240) {
-                    continue; // Skip white text pixels
-                }
-                
-                const ratio = contrastRatio(textHex, rgbToHex(bgR, bgG, bgB));
-                
-                if (ratio < worstRatio) {
-                    worstRatio = ratio;
-                    worstBgColor = { r: bgR, g: bgG, b: bgB };
+                try {
+                    const pixelData = ctx.getImageData(point.x, point.y, 1, 1);
+                    const bgR = pixelData.data[0];
+                    const bgG = pixelData.data[1];
+                    const bgB = pixelData.data[2];
+                    
+                    // Skip white pixels (text) - only sample background colors
+                    if (bgR > 240 && bgG > 240 && bgB > 240) {
+                        continue; // Skip white text pixels
+                    }
+                    
+                    const ratio = contrastRatio(textHex, rgbToHex(bgR, bgG, bgB));
+                    
+                    if (ratio < worstRatio) {
+                        worstRatio = ratio;
+                        worstBgColor = { r: bgR, g: bgG, b: bgB };
+                    }
+                } catch (error) {
+                    console.warn('Error sampling pixel at', point, error);
+                    continue;
                 }
             }
             
-            // Use the worst case
+            // Use the worst case, or fallback to basic contrast checker
+            if (worstRatio === Infinity || samplePoints.length === 0) {
+                console.warn('No valid background pixels found, using fallback');
+                updateContrastChecker();
+                return;
+            }
+            
             const bgHex = rgbToHex(worstBgColor.r, worstBgColor.g, worstBgColor.b);
             const ratio = worstRatio;
             

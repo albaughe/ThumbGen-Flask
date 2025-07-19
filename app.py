@@ -269,12 +269,7 @@ def generate_batch():
     try:
         form_data = request.form.to_dict()
         
-        # Debug: log what we received
-        print("Received form data:", form_data)
-        print("Batch mode:", form_data.get('batch_mode'))
-        print("Start number:", form_data.get('start_number'))
-        print("Batch count:", form_data.get('batch_count'))
-        print("Filename base:", form_data.get('filename_base'))
+
         
         # Parse settings
         settings = parse_settings(form_data)
@@ -358,4 +353,4 @@ def clear_cache():
     return jsonify({'success': True, 'message': 'Cache cleared'})
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000, threaded=True)
+    app.run(host='0.0.0.0', port=5000, threaded=True)
