@@ -217,7 +217,8 @@ def preview():
         
         # Generate preview
         text = settings.get('text', 'Week Overview')
-        preview_data, _ = generator.generate_thumbnail(text, 1, 1280, 720)
+        start_number = settings.get('start_number', 1)
+        preview_data, _ = generator.generate_thumbnail(text, start_number, 1280, 720)
         
         # Convert to base64
         img_buffer = io.BytesIO()

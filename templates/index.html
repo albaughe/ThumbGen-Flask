@@ -29,7 +29,7 @@
         .section-card {
             box-shadow: none;
             padding: 0.7rem 0.8rem 0.5rem 0.8rem;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1.2rem;
         }
         
         /* Prevent horizontal scrolling in left panel */
@@ -173,6 +173,11 @@
             line-height: 1.2;
         }
         
+        .form-label {
+            margin-bottom: 0.4rem;
+            display: block;
+        }
+        
         .btn-primary {
             background: #D73F09 !important;
             border: none !important;
@@ -224,9 +229,13 @@
         .section-title {
             font-weight: bold;
             font-size: 1rem;
-            margin-bottom: .3rem;
+            margin-bottom: 0.8rem;
             color: #d0d2d6;
             letter-spacing: 0.2px;
+            text-decoration: underline;
+            text-decoration-color: #D73F09;
+            text-underline-offset: 4px;
+            text-decoration-thickness: 2px;
         }
         
         .preview-image {
@@ -282,18 +291,7 @@
             color: #d0d2d6;
         }
         
-        /* Draggable overlay for individual tab */
-        .draggable-overlay {
-            position: absolute;
-            cursor: grab;
-            background: transparent;
-            display: none;
-            z-index: 10;
-        }
-        
-        .draggable-overlay:active {
-            cursor: grabbing;
-        }
+
         
         /* Ensure proper alignment for form elements */
         .form-label {
@@ -446,150 +444,145 @@
                             <div class="d-flex align-items-center justify-content-between mb-2">
                                 <div class="section-title mb-0">Thumbnail Text</div>
                                 <button type="button" id="reset-all-btn" class="btn btn-secondary btn-sm ms-2">Reset All</button>
-                            </div>
+                                            </div>
                                 <label class="form-label">Text to Display (use ^ for number in batch mode):</label>
                                 <textarea class="form-control form-control-sm" name="text" id="text" rows="2">Week ^ Overview</textarea>
-                            </div>
+                                </div>
                         <!-- Font & Size and Text Color Sections Side by Side -->
                         <div class="section-card">
                             <div class="row g-2 align-items-stretch">
                                 <!-- Font & Size (Left) -->
                                 <div class="col-6 pe-4" style="border-right: 2px solid #444;">
                             <div class="section-title">Font & Size</div>
-                                    <div class="mb-2">
+                                <div class="mb-2">
                                         <label class="form-label mb-0">Font:</label>
                                         <select name="font_name" class="form-select form-select-sm">
                                             {% for font in fonts %}
                                             <option value="{{ font }}">{{ font }}</option>
-                                            {% endfor %}
-                                        </select>
-                                    </div>
-                                    <div class="mb-2">
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="mb-2">
                                         <label class="form-label mb-0">Font Size:</label>
-                                        <div class="slider-group" data-default="100">
+                                    <div class="slider-group" data-default="100">
                                             <input type="range" name="font_size" min="10" max="200" value="100" class="form-range">
                                             <input type="number" min="1" max="500" value="100" class="form-control form-control-sm w-70px">
-                                            <button type="button" class="reset-btn btn btn-secondary btn-sm px-2 py-0">↺</button>
-                                        </div>
+                                        <button type="button" class="reset-btn btn btn-secondary btn-sm px-2 py-0">↺</button>
                                     </div>
+                                </div>
                                 </div>
                                 <!-- Text Color (Right) -->
                                 <div class="col-6 ps-4">
                                     <div class="section-title">Text Color</div>
                                     
-                                    <!-- Color Selection Row -->
-                                    <div class="mb-2">
-                                        <div class="row g-2">
-                                            <!-- Branded Colors Dropdown -->
-                                            <div class="col-6">
-                                                <label class="form-label mb-0">Branded Colors:</label>
-                                                <div class="custom-dropdown">
-                                                    <div class="dropdown-header" id="text-branded-dropdown-header">
-                                                        <span id="text-branded-text">Bucktooth White</span>
-                                                        <span class="dropdown-arrow">▼</span>
-                                                    </div>
-                                                    <div class="dropdown-options" id="text-branded-options" style="display: none;">
-                                                        <div class="dropdown-option" data-color="#FFFFFF" data-name="Bucktooth White">
-                                                            <div class="color-swatch" style="background: #FFFFFF; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
-                                                            <span>Bucktooth White</span>
-                                                        </div>
-                                                        <div class="dropdown-option" data-color="#000000" data-name="Paddletail Black">
-                                                            <div class="color-swatch" style="background: #000000; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
-                                                            <span>Paddletail Black</span>
-                                                        </div>
-                                                        <div class="dropdown-option" data-color="#D73F09" data-name="Beaver Orange">
-                                                            <div class="color-swatch" style="background: #D73F09; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
-                                                            <span>Beaver Orange</span>
-                                                        </div>
-                                                        <div class="dropdown-option" data-color="#4A773C" data-name="Pine Stand">
-                                                            <div class="color-swatch" style="background: #4A773C; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
-                                                            <span>Pine Stand</span>
-                                                        </div>
-                                                        <div class="dropdown-option" data-color="#00859B" data-name="High Tide">
-                                                            <div class="color-swatch" style="background: #00859B; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
-                                                            <span>High Tide</span>
-                                                        </div>
-                                                        <div class="dropdown-option" data-color="#FFB500" data-name="Luminance">
-                                                            <div class="color-swatch" style="background: #FFB500; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
-                                                            <span>Luminance</span>
-                                                        </div>
-                                                        <div class="dropdown-option" data-color="#006A8E" data-name="Stratosphere">
-                                                            <div class="color-swatch" style="background: #006A8E; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
-                                                            <span>Stratosphere</span>
-                                                        </div>
-                                                        <div class="dropdown-option" data-color="#C4D6A4" data-name="Reindeer Moss">
-                                                            <div class="color-swatch" style="background: #C4D6A4; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
-                                                            <span>Reindeer Moss</span>
-                                                        </div>
-                                                        <div class="dropdown-option" data-color="#B8DDE1" data-name="Seafoam">
-                                                            <div class="color-swatch" style="background: #B8DDE1; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
-                                                            <span>Seafoam</span>
-                                                        </div>
-                                                        <div class="dropdown-option" data-color="#FDD26E" data-name="Candela">
-                                                            <div class="color-swatch" style="background: #FDD26E; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
-                                                            <span>Candela</span>
-                                                        </div>
-                                                        <div class="dropdown-option" data-color="#C6DAE7" data-name="Moondust">
-                                                            <div class="color-swatch" style="background: #C6DAE7; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
-                                                            <span>Moondust</span>
-                                                        </div>
-                                                        <div class="dropdown-option" data-color="#AA9D2E" data-name="Hop Bine">
-                                                            <div class="color-swatch" style="background: #AA9D2E; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
-                                                            <span>Hop Bine</span>
-                                                        </div>
-                                                        <div class="dropdown-option" data-color="#0D5257" data-name="Rogue Wave">
-                                                            <div class="color-swatch" style="background: #0D5257; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
-                                                            <span>Rogue Wave</span>
-                                                        </div>
-                                                        <div class="dropdown-option" data-color="#D3832B" data-name="Solar Flare">
-                                                            <div class="color-swatch" style="background: #D3832B; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
-                                                            <span>Solar Flare</span>
-                                                        </div>
-                                                        <div class="dropdown-option" data-color="#003B5C" data-name="Star Canvas">
-                                                            <div class="color-swatch" style="background: #003B5C; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
-                                                            <span>Star Canvas</span>
-                                                        </div>
-                                                        <div class="dropdown-option" data-color="#B7A99A" data-name="Till">
-                                                            <div class="color-swatch" style="background: #B7A99A; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
-                                                            <span>Till</span>
-                                                        </div>
-                                                        <div class="dropdown-option" data-color="#A7ACA2" data-name="Coastline">
-                                                            <div class="color-swatch" style="background: #A7ACA2; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
-                                                            <span>Coastline</span>
-                                                        </div>
-                                                        <div class="dropdown-option" data-color="#7A6855" data-name="High Desert">
-                                                            <div class="color-swatch" style="background: #7A6855; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
-                                                            <span>High Desert</span>
-                                                        </div>
-                                                        <div class="dropdown-option" data-color="#8E9089" data-name="Crater">
-                                                            <div class="color-swatch" style="background: #8E9089; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
-                                                            <span>Crater</span>
-                                                        </div>
-                                                        <div class="dropdown-option" data-color="custom" data-name="Custom">
-                                                            <div class="color-swatch" style="background: linear-gradient(45deg, #ccc 25%, transparent 25%), linear-gradient(-45deg, #ccc 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #ccc 75%), linear-gradient(-45deg, transparent 75%, #ccc 75%); background-size: 4px 4px; background-position: 0 0, 0 2px, 2px -2px, -2px 0px; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
-                                                            <span>Custom Color</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                    <!-- Branded Colors Dropdown -->
+                                <div class="mb-2">
+                                    <label class="form-label mb-0">Branded Colors:</label>
+                                    <div class="custom-dropdown">
+                                        <div class="dropdown-header" id="text-branded-dropdown-header">
+                                            <span id="text-branded-text">Bucktooth White</span>
+                                            <span class="dropdown-arrow">▼</span>
+                                        </div>
+                                        <div class="dropdown-options" id="text-branded-options" style="display: none;">
+                                            <div class="dropdown-option" data-color="#FFFFFF" data-name="Bucktooth White">
+                                                <div class="color-swatch" style="background: #FFFFFF; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                <span>Bucktooth White</span>
                                             </div>
-                                            
-                                            <!-- Hex Code Input -->
-                                            <div class="col-6">
-                                                <label class="form-label mb-0">Hex Code:</label>
-                                                <input type="text" id="text-hex-input" class="form-control form-control-sm" placeholder="#FFFFFF" value="#FFFFFF" maxlength="7">
+                                            <div class="dropdown-option" data-color="#000000" data-name="Paddletail Black">
+                                                <div class="color-swatch" style="background: #000000; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                <span>Paddletail Black</span>
+                                            </div>
+                                            <div class="dropdown-option" data-color="#D73F09" data-name="Beaver Orange">
+                                                <div class="color-swatch" style="background: #D73F09; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                <span>Beaver Orange</span>
+                                            </div>
+                                            <div class="dropdown-option" data-color="#4A773C" data-name="Pine Stand">
+                                                <div class="color-swatch" style="background: #4A773C; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                <span>Pine Stand</span>
+                                            </div>
+                                            <div class="dropdown-option" data-color="#00859B" data-name="High Tide">
+                                                <div class="color-swatch" style="background: #00859B; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                <span>High Tide</span>
+                                            </div>
+                                            <div class="dropdown-option" data-color="#FFB500" data-name="Luminance">
+                                                <div class="color-swatch" style="background: #FFB500; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                <span>Luminance</span>
+                                            </div>
+                                            <div class="dropdown-option" data-color="#006A8E" data-name="Stratosphere">
+                                                <div class="color-swatch" style="background: #006A8E; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                <span>Stratosphere</span>
+                                            </div>
+                                            <div class="dropdown-option" data-color="#C4D6A4" data-name="Reindeer Moss">
+                                                <div class="color-swatch" style="background: #C4D6A4; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                <span>Reindeer Moss</span>
+                                            </div>
+                                            <div class="dropdown-option" data-color="#B8DDE1" data-name="Seafoam">
+                                                <div class="color-swatch" style="background: #B8DDE1; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                <span>Seafoam</span>
+                                            </div>
+                                            <div class="dropdown-option" data-color="#FDD26E" data-name="Candela">
+                                                <div class="color-swatch" style="background: #FDD26E; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                <span>Candela</span>
+                                            </div>
+                                            <div class="dropdown-option" data-color="#C6DAE7" data-name="Moondust">
+                                                <div class="color-swatch" style="background: #C6DAE7; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                <span>Moondust</span>
+                                            </div>
+                                            <div class="dropdown-option" data-color="#AA9D2E" data-name="Hop Bine">
+                                                <div class="color-swatch" style="background: #AA9D2E; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                <span>Hop Bine</span>
+                                            </div>
+                                            <div class="dropdown-option" data-color="#0D5257" data-name="Rogue Wave">
+                                                <div class="color-swatch" style="background: #0D5257; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                <span>Rogue Wave</span>
+                                            </div>
+                                            <div class="dropdown-option" data-color="#D3832B" data-name="Solar Flare">
+                                                <div class="color-swatch" style="background: #D3832B; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                <span>Solar Flare</span>
+                                            </div>
+                                            <div class="dropdown-option" data-color="#003B5C" data-name="Star Canvas">
+                                                <div class="color-swatch" style="background: #003B5C; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                <span>Star Canvas</span>
+                                            </div>
+                                            <div class="dropdown-option" data-color="#B7A99A" data-name="Till">
+                                                <div class="color-swatch" style="background: #B7A99A; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                <span>Till</span>
+                                            </div>
+                                            <div class="dropdown-option" data-color="#A7ACA2" data-name="Coastline">
+                                                <div class="color-swatch" style="background: #A7ACA2; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                <span>Coastline</span>
+                                            </div>
+                                            <div class="dropdown-option" data-color="#7A6855" data-name="High Desert">
+                                                <div class="color-swatch" style="background: #7A6855; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                <span>High Desert</span>
+                                            </div>
+                                            <div class="dropdown-option" data-color="#8E9089" data-name="Crater">
+                                                <div class="color-swatch" style="background: #8E9089; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                <span>Crater</span>
+                                            </div>
+                                            <div class="dropdown-option" data-color="custom" data-name="Custom">
+                                                <div class="color-swatch" style="background: linear-gradient(45deg, #ccc 25%, transparent 25%), linear-gradient(-45deg, #ccc 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #ccc 75%), linear-gradient(-45deg, transparent 75%, #ccc 75%); background-size: 4px 4px; background-position: 0 0, 0 2px, 2px -2px, -2px 0px; width: 16px; height: 16px; border: 1px solid #444; border-radius: 2px; display: inline-block; margin-right: 8px;"></div>
+                                                <span>Custom Color</span>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+
+                                <!-- Hex Code Input -->
+                                <div class="mb-2">
+                                    <label class="form-label mb-0">Hex Code:</label>
+                                    <input type="text" id="text-hex-input" class="form-control form-control-sm" placeholder="#FFFFFF" value="#FFFFFF" maxlength="7">
+                                </div>
                                     
                                     <div class="mb-2 d-flex align-items-center">
                                         <input type="color" name="text_color" value="#FFFFFF" class="form-control form-control-color">
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
                         <!-- Text Position & Spacing Section -->
-                        <div class="section-card">
+                        <div class="section-card" style="margin-top: 1.5rem;">
                             <div class="section-title">Text Position & Spacing</div>
                             
                             <!-- Position Controls -->
@@ -603,9 +596,9 @@
                                                 <input type="range" name="text_x_offset" id="text_x_offset" min="-900" max="900" value="0" class="form-range">
                                                 <input type="number" min="-900" max="900" value="0" class="form-control form-control-sm w-70px">
                                                 <button type="button" class="reset-btn btn btn-secondary btn-sm px-2 py-0">↺</button>
-                                            </div>
-                                        </div>
-                                        <div class="mb-2">
+                                </div>
+                            </div>
+                                    <div class="mb-2">
                                             <label class="form-label mb-0">Vertical Position:</label>
                                             <div class="slider-group" data-default="0">
                                                 <input type="range" name="text_y_offset" id="text_y_offset" min="-900" max="900" value="0" class="form-range">
@@ -621,16 +614,16 @@
                                                 <label class="alignment-option">
                                                     <input type="radio" name="text_alignment" value="top_left">
                                                     <div class="alignment-box"></div>
-                                                </label>
+                                            </label>
                                                 <label class="alignment-option">
                                                     <input type="radio" name="text_alignment" value="top_center">
                                                     <div class="alignment-box"></div>
-                                                </label>
+                                            </label>
                                                 <label class="alignment-option">
                                                     <input type="radio" name="text_alignment" value="top_right">
                                                     <div class="alignment-box"></div>
-                                                </label>
-                                            </div>
+                                            </label>
+                                        </div>
                                             <div class="alignment-row">
                                                 <label class="alignment-option">
                                                     <input type="radio" name="text_alignment" value="left">
@@ -644,7 +637,7 @@
                                                     <input type="radio" name="text_alignment" value="right">
                                                     <div class="alignment-box"></div>
                                                 </label>
-                                            </div>
+                                    </div>
                                             <div class="alignment-row">
                                                 <label class="alignment-option">
                                                     <input type="radio" name="text_alignment" value="bottom_left">
@@ -667,30 +660,30 @@
                             <!-- Spacing Controls -->
                             <div class="row g-2">
                                 <div class="col-6">
-                                    <div class="mb-2">
-                                        <label class="form-label mb-0">Text Margins:</label>
-                                        <div class="slider-group" data-default="100">
+                                                                <div class="mb-2">
+                                <label class="form-label mb-0">Text Margins:</label>
+                                    <div class="slider-group" data-default="100">
                                             <input type="range" name="text_margins" min="10" max="200" value="100" class="form-range">
                                             <input type="number" min="0" max="500" value="100" class="form-control form-control-sm w-70px">
-                                            <button type="button" class="reset-btn btn btn-secondary btn-sm px-2 py-0">↺</button>
-                                        </div>
+                                        <button type="button" class="reset-btn btn btn-secondary btn-sm px-2 py-0">↺</button>
                                     </div>
                                 </div>
+                            </div>
                                 <div class="col-6">
-                                    <div class="mb-2">
-                                        <label class="form-label mb-0">Line Spacing:</label>
-                                        <div class="slider-group" data-default="30">
+                            <div class="mb-2">
+                                <label class="form-label mb-0">Line Spacing:</label>
+                                    <div class="slider-group" data-default="30">
                                             <input type="range" name="line_spacing_factor" min="0" max="100" value="30" class="form-range">
                                             <input type="number" min="0" max="300" value="30" class="form-control form-control-sm w-70px">
-                                            <button type="button" class="reset-btn btn btn-secondary btn-sm px-2 py-0">↺</button>
-                                        </div>
-                                    </div>
+                                        <button type="button" class="reset-btn btn btn-secondary btn-sm px-2 py-0">↺</button>
+                                </div>
+                            </div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Text Effects Section -->
-                        <div class="section-card">
+                        <div class="section-card" style="margin-top: 1.5rem;">
                             <div class="section-title">Text Effects</div>
                             
                             <!-- Stroke Toggle -->
@@ -703,7 +696,8 @@
                             <div id="stroke_controls" style="display: none;">
                                 <div class="mb-2">
                                     <div class="row g-2">
-                                        <div class="col-6">
+                                        <!-- Stroke Color -->
+                                        <div class="mb-2">
                                             <label class="form-label mb-0">Stroke Color:</label>
                                             <div class="row g-2">
                                                 <div class="col-6">
@@ -804,7 +798,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-6">
+                                        
+                                        <!-- Stroke Width -->
+                                        <div class="mb-2">
                                             <label class="form-label mb-0">Width:</label>
                                             <div class="slider-group" data-default="2">
                                                 <input type="range" name="text_stroke_width" min="1" max="10" 
@@ -828,7 +824,8 @@
                             <div id="background_box_controls" style="display: none;">
                                 <div class="mb-2">
                                     <div class="row g-2">
-                                        <div class="col-4">
+                                        <!-- Box Color -->
+                                        <div class="mb-2">
                                             <label class="form-label mb-0">Box Color:</label>
                                             <div class="row g-2">
                                                 <div class="col-6">
@@ -929,7 +926,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-4">
+                                        
+                                        <!-- Box Padding -->
+                                        <div class="mb-2">
                                             <label class="form-label mb-0">Padding:</label>
                                             <div class="slider-group" data-default="20">
                                                 <input type="range" name="text_box_padding" min="5" max="50" 
@@ -939,7 +938,9 @@
                                                 <button type="button" class="reset-btn btn btn-secondary btn-sm px-2 py-0">↺</button>
                                             </div>
                                         </div>
-                                        <div class="col-4">
+                                        
+                                        <!-- Box Opacity -->
+                                        <div class="mb-2">
                                             <label class="form-label mb-0">Opacity:</label>
                                             <div class="slider-group" data-default="100">
                                                 <input type="range" name="text_box_opacity" min="0" max="100" 
@@ -955,7 +956,7 @@
                         </div>
 
                         <!-- Background & Pattern Section -->
-                        <div class="section-card">
+                        <div class="section-card" style="margin-top: 1.5rem;">
                             <div class="section-title">Background & Pattern</div>
                             <div class="mb-2">
                                 <label class="form-label mb-0">Background Color:</label>
@@ -1063,7 +1064,7 @@
                             <div class="mb-2 d-flex align-items-center gap-2">
                                 <input type="checkbox" name="background_image_enabled" id="background_image_enabled">
                                 <label for="background_image_enabled" class="mb-0 small">Enable Background Image</label>
-                            </div>
+                                    </div>
                             
                             <!-- Background Image Controls (initially hidden) -->
                             <div id="background_image_controls" style="display: none;">
@@ -1074,7 +1075,7 @@
                                         <option value="{{ bg }}">{{ bg }}</option>
                                         {% endfor %}
                                     </select>
-                                </div>
+                                    </div>
                                 <div class="mb-2">
                                     <label class="form-label mb-0">Opacity:</label>
                                     <div class="slider-group" data-default="100">
@@ -1292,27 +1293,27 @@
                                 </div>
                             </div>
                         </div>
-                </form>
-            </div>
-        </div>
-        
-        <!-- Preview Panel -->
-        <div class="col-auto d-flex flex-column position-relative" style="width: 35vw; min-width:500px; max-width:45vw;">
-            <div class="card p-2 d-flex flex-column align-items-center justify-content-start" 
-                 style="width: 100%; max-width: 98vw; margin: 0 auto;">
-                <h5 class="mb-2" style="align-self: flex-start;">Preview</h5>
-                <div class="preview-image position-relative d-flex align-items-center justify-content-center mb-2" 
-                     id="preview-container" 
-                     style="overflow: hidden; aspect-ratio: 16/9; width: 100%; max-width: 100%;">
-                    <div style="position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
-                        <img id="preview-img" style="display: none; width: 100%; height: 100%; object-fit: contain;">
-                        <div id="draggable-overlay" class="draggable-overlay"></div>
-                        <p id="preview-text" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); margin: 0;">
-                            Loading preview...
-                        </p>
-                        <div class="preview-spinner" id="preview-spinner"></div>
-                    </div>
+                    </form>
                 </div>
+            </div>
+            
+            <!-- Preview Panel -->
+        <div class="col-auto d-flex flex-column position-relative" style="width: 35vw; min-width:500px; max-width:45vw;">
+                <div class="card p-2 d-flex flex-column align-items-center justify-content-start" 
+                     style="width: 100%; max-width: 98vw; margin: 0 auto;">
+                    <h5 class="mb-3" style="align-self: flex-start; text-decoration: underline; text-decoration-color: #D73F09; text-underline-offset: 4px; text-decoration-thickness: 2px;">Preview</h5>
+                    <div class="preview-image position-relative d-flex align-items-center justify-content-center mb-2" 
+                         id="preview-container" 
+                         style="overflow: hidden; aspect-ratio: 16/9; width: 100%; max-width: 100%;">
+                        <div style="position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                            <img id="preview-img" style="display: none; width: 100%; height: 100%; object-fit: contain;">
+            
+                            <p id="preview-text" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); margin: 0;">
+                                Loading preview...
+                            </p>
+                            <div class="preview-spinner" id="preview-spinner"></div>
+                        </div>
+                    </div>
                 <!-- Contrast Checker Panel: Inserted directly after preview window -->
                 <div id="contrast-checker-panel" class="section-card mt-3 mb-3" style="max-width: 420px; margin: 0 auto;">
                     <div class="section-title mb-2" style="font-size: 1rem;">Contrast Checker</div>
@@ -1332,59 +1333,59 @@
                           <span id="contrast-ratio" style="font-weight:bold;font-size:15px;margin-left:8px;"></span>
                         </div>
                         <div id="contrast-status" style="font-size:13px;"></div>
+                        </div>
                     </div>
-                </div>
-                
+                    
                 <!-- File & Text Settings (moved back under preview) -->
-                <div class="w-100 mb-2">
-                    <div class="section-card">
-                        <div class="section-title">File & Text</div>
-                        <div class="mb-2">
-                            <label class="form-label">File Name:</label>
-                            <input type="text" class="form-control form-control-sm" 
-                                   name="filename_base" id="filename_base" value="Thumbnail">
-                        </div>
-                        
-                        <!-- Batch Mode Toggle -->
-                        <div class="mb-2 d-flex align-items-center gap-2">
-                            <input type="checkbox" name="batch_mode" id="batch_mode">
-                            <label for="batch_mode" class="mb-0 small">Batch Mode</label>
-                        </div>
-                        
-                        <!-- Batch Controls (initially hidden) -->
-                        <div id="batch_controls" style="display: none;">
-                            <div class="mb-2 d-flex align-items-center gap-2">
-                                <div class="flex-1">
-                                    <label class="form-label">Start Number:</label>
-                                    <input type="number" class="form-control form-control-sm" 
-                                           name="start_number" id="start_number" min="1" max="1000" 
-                                           value="1" class="w-80px">
-                                </div>
-                                <div class="flex-1">
-                                    <label class="form-label">Number of Files:</label>
-                                    <input type="number" class="form-control form-control-sm" 
-                                           name="batch_count" id="batch_count" min="1" max="100" 
-                                           value="1" class="w-80px">
-                                </div>
-                            </div>
+                    <div class="w-100 mb-2">
+                        <div class="section-card">
+                            <div class="section-title">File & Text</div>
                             <div class="mb-2">
-                                <h6 class="mb-1 small">Output Filenames</h6>
-                                <div class="filename-preview" id="filename-preview" style="font-size:12px;">
-                                    Files will appear here...
+                                <label class="form-label">File Name:</label>
+                                <input type="text" class="form-control form-control-sm" 
+                                       name="filename_base" id="filename_base" value="Thumbnail">
+                            </div>
+                            
+                            <!-- Batch Mode Toggle -->
+                            <div class="mb-2 d-flex align-items-center gap-2">
+                                <input type="checkbox" name="batch_mode" id="batch_mode">
+                                <label for="batch_mode" class="mb-0 small">Batch Mode</label>
+                            </div>
+                            
+                            <!-- Batch Controls (initially hidden) -->
+                            <div id="batch_controls" style="display: none;">
+                                <div class="mb-2 d-flex align-items-center gap-2">
+                                    <div class="flex-1">
+                                        <label class="form-label">Start Number:</label>
+                                        <input type="number" class="form-control form-control-sm" 
+                                               name="start_number" id="start_number" min="1" max="1000" 
+                                               value="1" class="w-80px">
+                                    </div>
+                                    <div class="flex-1">
+                                        <label class="form-label">Number of Files:</label>
+                                        <input type="number" class="form-control form-control-sm" 
+                                               name="batch_count" id="batch_count" min="1" max="100" 
+                                               value="1" class="w-80px">
+                                    </div>
+                                </div>
+                                <div class="mb-2">
+                                    <h6 class="mb-1 small">Output Filenames</h6>
+                                    <div class="filename-preview" id="filename-preview" style="font-size:12px;">
+                                        Files will appear here...
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                
-                <!-- Download Button -->
-                <div class="w-100 mb-1">
-                    <button type="button" class="btn btn-primary w-100 btn-sm" id="download-btn">
-                        Download PNG
-                    </button>
+                    
+                    <!-- Download Button -->
+                    <div class="w-100 mb-1">
+                        <button type="button" class="btn btn-primary w-100 btn-sm" id="download-btn">
+                            Download PNG
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
         </div>
     </div>
 
@@ -1594,84 +1595,7 @@
             });
         }
 
-        // Draggable text functionality
-        function setupDraggableText() {
-            const previewContainer = document.getElementById('preview-container');
-            const overlay = document.getElementById('draggable-overlay');
-            const xInput = document.getElementById('text_x_offset');
-            const yInput = document.getElementById('text_y_offset');
-            const form = document.getElementById('settings-form');
-            const img = document.getElementById('preview-img');
 
-            if (!previewContainer || !overlay || !xInput || !yInput) return;
-
-            function syncDraggableOverlay() {
-                if (img.style.display === 'none') {
-                    overlay.style.display = 'none';
-                    return;
-                }
-                const containerRect = previewContainer.getBoundingClientRect();
-                const imgRect = img.getBoundingClientRect();
-                let left = imgRect.left - containerRect.left;
-                let top = imgRect.top - containerRect.top;
-                let width = imgRect.width;
-                let height = imgRect.height;
-                overlay.style.display = 'block';
-                overlay.style.left = left + 'px';
-                overlay.style.top = top + 'px';
-                overlay.style.width = width + 'px';
-                overlay.style.height = height + 'px';
-                overlay.style.position = 'absolute';
-                overlay.style.pointerEvents = 'auto';
-            }
-
-            xInput.addEventListener('input', syncDraggableOverlay);
-            yInput.addEventListener('input', syncDraggableOverlay);
-            if (form) {
-                const textInput = form.querySelector('[name="text"]');
-                if (textInput) textInput.addEventListener('input', syncDraggableOverlay);
-            }
-            img.addEventListener('load', syncDraggableOverlay);
-            window.addEventListener('resize', syncDraggableOverlay);
-
-            let dragging = false;
-            let startX, startY, startOffsetX, startOffsetY;
-
-            overlay.addEventListener('pointerdown', function(e) {
-                dragging = true;
-                overlay.setPointerCapture(e.pointerId);
-                startX = e.clientX;
-                startY = e.clientY;
-                startOffsetX = parseInt(xInput.value) || 0;
-                startOffsetY = parseInt(yInput.value) || 0;
-                overlay.style.cursor = 'grabbing';
-            });
-            
-            overlay.addEventListener('pointerup', function(e) {
-                dragging = false;
-                overlay.releasePointerCapture(e.pointerId);
-                overlay.style.cursor = 'grab';
-            });
-            
-            overlay.addEventListener('pointermove', function(e) {
-                if (!dragging) return;
-                const overlayRect = overlay.getBoundingClientRect();
-                const dx = e.clientX - startX;
-                const dy = e.clientY - startY;
-                const pxPerX = overlayRect.width / 1800;
-                const pxPerY = overlayRect.height / 1800;
-                let newX = startOffsetX + Math.round(dx / pxPerX);
-                let newY = startOffsetY + Math.round(dy / pxPerY);
-                newX = Math.max(-900, Math.min(900, newX));
-                newY = Math.max(-900, Math.min(900, newY));
-                xInput.value = newX;
-                yInput.value = newY;
-                updateXYDotFromInputs();
-                scheduleUpdate(50);
-            });
-
-            setTimeout(syncDraggableOverlay, 500);
-        }
 
         // Update scheduling and preview management
         let updateTimeout;
@@ -1712,7 +1636,15 @@
                 if (!form || !preview.img || !preview.text) return;
 
                 const formData = new FormData(form);
-                formData.set('start_number', 1);
+                
+                // Use the actual starting number if batch mode is enabled
+                const batchMode = document.getElementById('batch_mode');
+                const startNumber = document.getElementById('start_number');
+                if (batchMode && batchMode.checked && startNumber) {
+                    formData.set('start_number', startNumber.value);
+                } else {
+                    formData.set('start_number', 1);
+                }
 
                 const requestKey = createRequestKey(formData);
 
@@ -1790,7 +1722,19 @@
                 preview.img.src = data.image;
                 preview.img.style.display = 'block';
                 preview.text.style.display = 'none';
-                
+
+                // Draw to hidden canvas for pixel sampling
+                const canvas = document.getElementById('preview-canvas');
+                const ctx = canvas.getContext('2d', { willReadFrequently: true });
+                const img = new window.Image();
+                img.onload = function() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    // After drawing, update the contrast checker with sampled color
+                    updateContrastCheckerWithSampledBg();
+                };
+                img.src = data.image;
+
                 // Sync draggable overlay
                 setTimeout(() => {
                     const overlay = document.getElementById('draggable-overlay');
@@ -1877,7 +1821,7 @@
                 console.log('Start number:', startNumber?.value);
                 console.log('Batch count:', batchCount?.value);
                 console.log('Filename base:', filenameBase?.value);
-                
+
                 const endpoint = batchMode && batchMode.checked ? '/generate' : '/individual';
                 const response = await fetch(endpoint, {
                     method: 'POST',
@@ -1970,12 +1914,108 @@
             document.getElementById('contrast-status').innerHTML = status;
         }
 
+        function updateContrastCheckerWithSampledBg() {
+            const canvas = document.getElementById('preview-canvas');
+            const ctx = canvas.getContext('2d', { willReadFrequently: true });
+
+            // Get text and font settings from form
+            const text = document.getElementById('text').value;
+            const fontSize = parseInt(document.querySelector('input[name="font_size"]').value) || 100;
+            const fontName = document.querySelector('select[name="font_name"]').value || 'Arial';
+            const xOffset = parseInt(document.getElementById('text_x_offset').value) || 0;
+            const yOffset = parseInt(document.getElementById('text_y_offset').value) || 0;
+            const lineSpacing = (parseInt(document.querySelector('input[name="line_spacing_factor"]').value) || 30) / 100 * fontSize;
+
+            // Calculate text position
+            const lines = text.split('\n');
+            let textWidth = 0;
+            const tempCtx = canvas.getContext('2d');
+            tempCtx.font = `${fontSize}px \"${fontName}\"`;
+            lines.forEach(line => {
+                textWidth = Math.max(textWidth, tempCtx.measureText(line).width);
+            });
+            const totalHeight = lines.length * (fontSize + lineSpacing) - lineSpacing;
+
+            let x = (canvas.width - textWidth) / 2 + xOffset;
+            let y = (canvas.height - totalHeight) / 2 + yOffset;
+
+            // Sample multiple points across the text area to find worst case
+            const samplePoints = [];
+            const stepX = Math.max(1, Math.floor(textWidth / 5)); // Sample 5 points horizontally
+            const stepY = Math.max(1, Math.floor(totalHeight / 3)); // Sample 3 points vertically
+            
+            for (let sx = 0; sx <= textWidth; sx += stepX) {
+                for (let sy = 0; sy <= totalHeight; sy += stepY) {
+                    const sampleX = Math.round(x + sx);
+                    const sampleY = Math.round(y + sy);
+                    
+                    // Make sure we're within canvas bounds
+                    if (sampleX >= 0 && sampleX < canvas.width && sampleY >= 0 && sampleY < canvas.height) {
+                        samplePoints.push({ x: sampleX, y: sampleY });
+                    }
+                }
+            }
+            
+            // Find the worst contrast ratio among all sample points
+            let worstRatio = Infinity;
+            let worstBgColor = { r: 0, g: 0, b: 0 };
+            
+            // Get text color from input
+            const textHex = document.querySelector('input[name="text_color"]').value || '#ffffff';
+            
+            for (const point of samplePoints) {
+                const pixelData = ctx.getImageData(point.x, point.y, 1, 1);
+                const bgR = pixelData.data[0];
+                const bgG = pixelData.data[1];
+                const bgB = pixelData.data[2];
+                
+                // Skip white pixels (text) - only sample background colors
+                if (bgR > 240 && bgG > 240 && bgB > 240) {
+                    continue; // Skip white text pixels
+                }
+                
+                const ratio = contrastRatio(textHex, rgbToHex(bgR, bgG, bgB));
+                
+                if (ratio < worstRatio) {
+                    worstRatio = ratio;
+                    worstBgColor = { r: bgR, g: bgG, b: bgB };
+                }
+            }
+            
+            // Use the worst case
+            const bgHex = rgbToHex(worstBgColor.r, worstBgColor.g, worstBgColor.b);
+            const ratio = worstRatio;
+            
+            // Update swatches and hex
+            document.getElementById('contrast-text-swatch').style.background = textHex;
+            document.getElementById('contrast-text-hex').textContent = textHex.toUpperCase();
+            document.getElementById('contrast-bg-swatch').style.background = bgHex;
+            document.getElementById('contrast-bg-hex').textContent = bgHex.toUpperCase();
+
+            // Display contrast ratio
+            let ratioStr = ratio.toFixed(2) + ':1';
+            document.getElementById('contrast-ratio').textContent = ratioStr;
+
+            // WCAG pass/fail
+            let status = '';
+            status += `<span>Normal Text: <b style=\"color:${ratio >= 4.5 ? '#4A773C' : '#D73F09'}\">${ratio >= 4.5 ? 'AA Pass' : 'AA Fail'}</b> / <b style=\"color:${ratio >= 7 ? '#4A773C' : '#D73F09'}\">${ratio >= 7 ? 'AAA Pass' : 'AAA Fail'}</b></span><br>`;
+            status += `<span>Large Text: <b style=\"color:${ratio >= 3 ? '#4A773C' : '#D73F09'}\">${ratio >= 3 ? 'AA Pass' : 'AA Fail'}</b> / <b style=\"color:${ratio >= 4.5 ? '#4A773C' : '#D73F09'}\">${ratio >= 4.5 ? 'AAA Pass' : 'AAA Fail'}</b></span><br>`;
+            status += `<span>UI/Graphics: <b style=\"color:${ratio >= 3 ? '#4A773C' : '#D73F09'}\">${ratio >= 3 ? 'AA Pass' : 'AA Fail'}</b></span>`;
+            document.getElementById('contrast-status').innerHTML = status;
+        }
+
+        function rgbToHex(r, g, b) {
+            return "#" + [r, g, b].map(x => {
+                const hex = x.toString(16);
+                return hex.length === 1 ? "0" + hex : hex;
+            }).join('');
+        }
+
         // Initialize everything when DOM is ready
         document.addEventListener('DOMContentLoaded', function() {
             setupXYSlider();
             setupAllSliders();
             setupAllInputs();
-            setupDraggableText();
             
             // Setup show/hide functionality for background and pattern controls
             setupToggleControls();
@@ -1995,6 +2035,7 @@
                         if (downloadBtn) downloadBtn.textContent = 'Download PNG';
                     }
                     updateFilenames();
+                    scheduleUpdate(50); // Update preview when batch mode is toggled
                 });
             }
             
@@ -2013,6 +2054,7 @@
             if (startNumber) {
                 startNumber.addEventListener('input', () => {
                     updateFilenames();
+                    scheduleUpdate(50); // Also update preview when starting number changes
                 });
             }
             
@@ -2232,7 +2274,7 @@
                     }
                 }
                 
-                updateContrastChecker();
+                // Don't call updateContrastChecker here to avoid circular dependency
             }
 
             // Background dropdown toggle
@@ -2614,6 +2656,25 @@
                 undoStack = [];
             });
         }
+
+        function getAverageColor(ctx, x, y, width, height) {
+            const imageData = ctx.getImageData(x, y, width, height);
+            const data = imageData.data;
+            let r = 0, g = 0, b = 0, count = 0;
+            for (let i = 0; i < data.length; i += 4) {
+                r += data[i];
+                g += data[i + 1];
+                b += data[i + 2];
+                count++;
+            }
+            return {
+                r: Math.round(r / count),
+                g: Math.round(g / count),
+                b: Math.round(b / count)
+            };
+        }
     </script>
+    <canvas id="preview-canvas" width="1280" height="720" style="display:none;"></canvas>
+    <canvas id="text-mask-canvas" width="1280" height="720" style="display:none;"></canvas>
 </body>
 </html>
